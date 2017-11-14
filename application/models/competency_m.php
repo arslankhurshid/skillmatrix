@@ -74,16 +74,23 @@ Class competency_m extends My_Model {
     public function getSubCompArray($id) {
         // get sub cat in array for expense drop down
         $this->db->select('id, name');
-        $this->db->where('parent_id=', $id);
+        $this->db->where('parent_id!=',0);
 
         $categories = parent::get();
+        echo $this->db->last_query();
+        echo "<pre>";
+        print_r($array);
+        echo "</pre>";
         $array = array();
         if (count($categories)) {
             foreach ($categories as $category) {
                 $array[$category->id] = $category->name;
             }
         }
-        return $array;
+        echo "<pre>";
+        print_r($array);
+        echo "</pre>";
+//        return $array;
     }
 
     public function get_no_parents($id = null) {

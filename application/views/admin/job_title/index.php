@@ -1,6 +1,6 @@
 <section>
     <h2>Stellenbezeichnung</h2>
-    <?php echo anchor('admin/dashboard/edit', '<span class="glyphicon glyphicon-plus"> </span>Erstellen'); ?>
+    <?php echo anchor('admin/jobtitle/edit', '<span class="glyphicon glyphicon-plus"> </span>Erstellen'); ?>
 
     <div class="container">
         <div class="row">
@@ -24,7 +24,6 @@
                                 ?>
                                 <tr>
                                     <td><?php echo anchor('admin/dashboard/edit/' . $title['id'], $title['title']); ?> </td>
-                                    <td><?php echo $title['job_title']; ?></td>
                                     <td><?php echo $title['parent_competency_name'] ?></td>
                                     <td><?php echo $title['competency_name'] ?></td>
                                     <td><?php echo btn_edit('admin/jobtitle/edit/' . $title['id']) ?></td>

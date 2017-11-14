@@ -41,7 +41,6 @@ class dashboard extends Admin_Controller {
 //            print_r($_POST);
 //            echo "</pre>";
 //            exit();
-
 //            exit();
 
             $data = $this->user_m->array_from_post(array(
@@ -83,13 +82,13 @@ class dashboard extends Admin_Controller {
         redirect('admin/user');
     }
 
-    public function updateDropDownField($id) {
+    public function updateDropDownField($id=null) {
 
         if ($id == 0) {
             $this->data['sub_competencies'] = array();
-        } else {
-            $this->data['sub_competencies'] = $this->competency_m->getSubCompArray($id);
         }
+        $this->data['sub_competencies'] = $this->competency_m->getSubCompArray($id);
+        
         if (count($this->data['sub_competencies'])) {
             echo '<div class="form-group">
             <label class="">Kompetenz</label>
