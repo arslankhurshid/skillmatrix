@@ -10,8 +10,8 @@
             <tr>
                 <td >Name</td>
                 <td >Fachbereich</td>
-                <td>Edit</td>
-                <td>Delete</td>
+                <td>Bearbeiten</td>
+                <td>Löschen</td>
 
             </tr>
         </thead>

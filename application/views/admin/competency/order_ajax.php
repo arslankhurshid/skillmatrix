@@ -1,5 +1,7 @@
 <?php
-
+//echo "<pre>";
+//print_r($competencies);
+//echo "</pre>";
 echo get_ol($competencies);
 
 function get_ol($array, $child = false) {
@@ -20,17 +22,16 @@ function get_ol($array, $child = false) {
     }
     return $str;
 }
-
 ?>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
 
-		$('.sortable').nestedSortable({
-			handle: 'div',
-			items: 'li',
-			toleranceElement: '> div', 
-                        maxLevels: 2,
-		});
+        $('.sortable').nestedSortable({
+            handle: 'div',
+            items: 'li',
+            toleranceElement: '> div',
+            maxLevels: 2,
+        });
 
-	});
-    </script>
+    });
+</script>

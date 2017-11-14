@@ -7,10 +7,12 @@ class dashboard extends Admin_Controller {
         $this->load->helper('url');
         $this->load->model('user_m');
         $this->load->model('competency_m');
+        $this->load->model('user_has_comp_m');
     }
 
     function index() {
         $this->data['users'] = $this->user_m->get();
+        $this->data['user_competencies'] = $this->user_m->get_user_competencies();
         //Load view
         $this->data['subview'] = 'admin/user/index';
         $this->load->view('admin/_layout_main.php', $this->data);
@@ -34,10 +36,14 @@ class dashboard extends Admin_Controller {
 
         $this->form_validation->set_rules($rules);
         if ($this->form_validation->run() == TRUE) {
-            echo "<pre>";
-            print_r($_POST);
-            echo "</pre>";
-            exit();
+
+//            echo "<pre>";
+//            print_r($_POST);
+//            echo "</pre>";
+//            exit();
+
+//            exit();
+
             $data = $this->user_m->array_from_post(array(
                 'fname',
                 'lname',
@@ -47,8 +53,24 @@ class dashboard extends Admin_Controller {
                 'ausbildung',
             ));
 
-            $this->user_m->save($data, $id);
-//            redirect('admin/user');
+            $lastInsertedID = $this->user_m->save($data, $id);
+            if (isset($_POST) && !empty($_POST['competencies'])) {
+                $competencies = $_POST['competencies'];
+                if (!empty($competencies)) {
+                    foreach ($_POST['competencies'] as $k => $v) {
+                        // get the sub comp
+                        if (isset($_POST['competency-' . $v]) && $_POST['competency-' . $v] != '') {
+
+                            $this->user_has_comp_m->save(array(
+                                'user_id' => $lastInsertedID,
+                                'competency_id' => $v,
+                                'skill_value' => $_POST['competency-' . $v][0],
+                                    ), $id);
+                        }
+                    }
+                }
+            }
+            redirect('admin/dashboard');
         }
         $this->data['subview'] = 'admin/user/edit';
         $this->data['competency_without_parents'] = $this->competency_m->get_no_parents($id);
@@ -62,42 +84,42 @@ class dashboard extends Admin_Controller {
     }
 
     public function updateDropDownField($id) {
+
         if ($id == 0) {
-            $this->data['sub_competencies'] = array(0 => 'Keine');
+            $this->data['sub_competencies'] = array();
         } else {
             $this->data['sub_competencies'] = $this->competency_m->getSubCompArray($id);
         }
         if (count($this->data['sub_competencies'])) {
             echo '<div class="form-group">
-            <label class="">Kompetenzen</label>
-                <ul id="tree1">
-                ';
+            <label class="">Kompetenz</label>
+                <ul id="tree1">';
 
             foreach ($this->data['sub_competencies'] as $key => $value) {
-//                echo "<pre>";
-//                print_r($value);
-//                echo "</pre>";
-//        $weight = '';
+
                 $selected = '';
-                if ($value == $key) {
-                    $selected = 'checked';
-                }
-//                if (isset($_POST['competency']) && !empty($_POST['competency'])) {
-//                }
-//        if (isset($_POST['competencyWeight' . $row['id']]) && $_POST['competencyWeight' . $row['id']] != '') {
-//            $weight = $_POST['competencyWeight' . $row['id']];
-//        }
                 ?>
                 <li class="col-md-12" style="margin-top: 10px;">
                     <div class="col-md-1">
-                        <input type="checkbox" name="competency[]" id="<?php echo $key; ?>" class="cbgroup1" value="<?php echo $key; ?>" <?php echo $selected; ?>>
+                        <input type="checkbox" name="competencies[]" value="<?php echo $key; ?>" <?php echo $selected; ?>>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-7">
                         <label><?php echo $value; ?></label>
                     </div>
-                    <div class="col-md-1">
-                        <!--<input type="text" class="form-control" name="skillvalue<?php // echo $key;  ?>" value="<?php // echo $weight;  ?>" placeholder="Enter Weight">-->
-                        <?php echo form_dropdown('skill_id', array('Good', 'Expert', 'Intermediate'), $this->input->post('skill_id') ? $this->input->post('skill_id') : $key, 'class="btn btn-default dropdown-toggle btn-select2" id="my_id"'); ?>
+                    <div class="col-md-4">
+                        <select name="competency-<?php echo $key ?>[]" class="form-control">
+
+                            <?php
+                            $data = array('' => 'Keine', 'basic' => 'Basic', 'intermediate' => 'Intermediate', 'advanced' => 'Advanced', 'expert' => 'Expert');
+                            foreach ($data as $key => $val) {
+                                echo '<option value = "' . $key . '">' . $val . '</option>';
+                            }
+                            ?>
+
+                        </select>
+
+
+
                     </div>
                 </li>
                 <?php
@@ -107,6 +129,17 @@ class dashboard extends Admin_Controller {
 //        echo json_encode($this->data['sub_competencies']);
 //        $competencies = $this->competency_m->get_with_parent($id);
 //        echo json_encode($competencies);
+    }
+
+    function IsChecked($chkname, $value) {
+        if (!empty($_POST[$chkname])) {
+            foreach ($_POST[$chkname] as $chkval) {
+                if ($chkval == $value) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

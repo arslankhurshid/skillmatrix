@@ -1,4 +1,4 @@
-<h3><?php echo empty($user->id) ? 'Erstell eine neue Mitarbeiter' : 'Bearbeiten:' . '&nbsp' . $user->fname ?></h3>
+<h3><?php echo empty($user->id) ? 'Mitarbeiter Stammdaten' : 'Bearbeiten:' . '&nbsp' . $user->fname ?></h3>
 <?php if (!empty(validation_errors())): ?>
     <div class="alert alert-danger" id="errordiv">
         <?php echo validation_errors() ?>
@@ -37,13 +37,14 @@
 
     <tr>
         <td></td>
-        <td><?php echo form_submit('submit', 'Save', 'class="btn btn-primary"'); ?></td>
+        <td></td>
     </tr>
 
 </table>
 <div id="competency">
 
 </div>
+<?php echo form_submit('submit', 'Save', 'class="btn btn-primary"'); ?>
 <?php echo form_close(); ?>
 
 <script>
