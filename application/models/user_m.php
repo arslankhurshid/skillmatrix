@@ -40,6 +40,7 @@ Class user_m extends My_Model {
         $users->dob = date('d.y.Y');
         $users->ausbildung = '';
         $users->address = '';
+        $users->parent_id = 0;
         return $users;
     }
 
