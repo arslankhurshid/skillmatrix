@@ -11,7 +11,6 @@
                 <td >Name</td>
                 <td >Stellenbezeichnung</td>
                 <td >Geburtsdatum</td>
-                <td >Wohnort</td>
                 <td >Ausbildung</td>
                 <td>Edit</td>
                 <td>Delete</td>
@@ -29,10 +28,10 @@
                         <td><?php echo anchor('admin/dashboard/edit/' . $user->id, $user->fname . " " . $user->lname); ?> </td>
                         <td><?php echo $user->job_title; ?></td>
                         <td><?php echo $user->dob ?></td>
-                        <td><?php echo $user->address ?></td>
                         <td><?php echo $user->ausbildung ?></td>
-                        <td><?php echo anchor('admin/dashboard/edit/' . $user->id, '<span class="glyphicon glyphicon-edit"></span>') ?></td>
-                        <td><?php echo anchor('admin/dashboard/delete/' . $user->id, '<span class="glyphicon glyphicon-remove"></span>', array('onclick' => "return confirm('Are you sure you want to delete. This can not be undone');")) ?></td>
+                        <td><?php echo btn_edit('admin/dashboard/edit/' . $user->id) ?></td>
+                        <td><?php echo btn_delete('admin/dashboard/delete/' . $user->id) ?></td>
+
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>

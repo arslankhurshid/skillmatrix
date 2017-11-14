@@ -7,8 +7,8 @@
             </div>
             <ul class="nav navbar-nav">
                 <li class="active"><a href="<?php echo base_url('/admin/dashboard'); ?>">Dashboard</a></li>
-                <li><?php echo anchor('admin/page', 'pages'); ?></li>
-                <li><?php echo anchor('admin/page/order', 'order pages'); ?></li>
+                <li><?php echo anchor('admin/competency', 'Kompetenz'); ?></li>
+                <li><?php echo anchor('admin/competency/order', 'Kompetenzen sortieren'); ?></li>
                 <li><?php echo anchor('admin/user', 'users'); ?></li>
                 <li><?php echo anchor('admin/article', 'news articles'); ?></li>
                 <li><?php echo anchor('admin/categories', 'categories'); ?></li>

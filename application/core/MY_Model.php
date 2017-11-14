@@ -31,7 +31,7 @@ Class My_Model extends CI_Model {
 //        $this->db->select('*');
 //        $this->db->from($this->_table_name);
 //        $this->db->get();
-//        
+////        
 //        print_r($this->db->last_query());
 //        exit();
 //        $this->db->where('code', 'B');

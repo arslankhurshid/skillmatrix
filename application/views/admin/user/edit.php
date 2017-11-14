@@ -28,7 +28,11 @@
     </tr>
     <tr>
         <td>Ausbildung:</td>
-        <td><?php echo form_input('ausbildung', set_value('ausbildung', $user->address)); ?></td>
+        <td><?php echo form_input('ausbildung', set_value('ausbildung', $user->ausbildung)); ?></td>
+    </tr>
+    <tr>
+        <td>Fachbereich:</td>
+        <td><?php echo form_dropdown('parent_id', $competency_without_parents, $this->input->post('parent_id') ? $this->input->post('parent_id') : $user->parent_id, 'class="btn btn-default dropdown-toggle btn-select2" id="my_id"'); ?></td>
     </tr>
 
     <tr>
@@ -37,6 +41,9 @@
     </tr>
 
 </table>
+<div id="competency">
+
+</div>
 <?php echo form_close(); ?>
 
 <script>
@@ -45,6 +52,24 @@
         $('.datepicker').datepicker({format: 'dd.mm.yyyy'});
 
     });
+
+    var drop_down = document.getElementById("my_id");
+    drop_down.onchange = function () {
+
+        $.post('<?php echo site_url('admin/dashboard/updateDropDownField/'); ?>' + drop_down.value, {dataType: "json"}, function (data) {
+            console.info(data);
+            $("#competency").html('');
+            $("#competency").html(data);
+//            var $el = $("#my_id2");
+//            $el.empty(); // remove old options
+//            $.each(JSON.parse(data), function (key, value) {
+//
+//                $('#my_id2').append($('<option>').text(value).attr('value', key));
+//
+//                console.log(key + ":" + value)
+//            })
+        });
+    };
 
 
 </script>
