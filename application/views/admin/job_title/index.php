@@ -1,10 +1,5 @@
-<?php 
-//echo "<pre>";
-//print_r($user_competencies);
-//echo "</pre>";
-?>
 <section>
-    <h2>Mitarbeiter</h2>
+    <h2>Stellenbezeichnung</h2>
     <?php echo anchor('admin/dashboard/edit', '<span class="glyphicon glyphicon-plus"> </span>Erstellen'); ?>
 
     <div class="container">
@@ -14,9 +9,7 @@
                 <table class="table table-striped" width="100%">
                     <thead>
                         <tr>
-                            <td>Name</td>
                             <td >Stellenbezeichnung</td>
-                            <td >Geburtsdatum</td>
                             <td >Fachbereich</td>
                             <td >Kompetenzen</td>
                             <td>Bearbeiten</td>
@@ -26,22 +19,21 @@
                     </thead>
                     <tbody>
                         <?php
-                        if (count($user_competencies)) :
-                            foreach ($user_competencies as $user):
+                        if (count($job_title_competencies)) :
+                            foreach ($job_title_competencies as $title):
                                 ?>
                                 <tr>
-                                    <td><?php echo anchor('admin/dashboard/edit/' . $user['id'], $user['fname'] . " " . $user['lname']); ?> </td>
-                                    <td><?php echo $user['job_title']; ?></td>
-                                    <td><?php echo $user['dob'] ?></td>
-                                    <td><?php echo $user['parent_competency_name'] ?></td>
-                                    <td><?php echo $user['competency_name'] ?></td>
-                                    <td><?php echo btn_edit('admin/dashboard/edit/' . $user['id']) ?></td>
-                                    <td><?php echo btn_delete('admin/dashboard/delete/' . $user['id']) ?></td>
+                                    <td><?php echo anchor('admin/dashboard/edit/' . $title['id'], $title['title']); ?> </td>
+                                    <td><?php echo $title['job_title']; ?></td>
+                                    <td><?php echo $title['parent_competency_name'] ?></td>
+                                    <td><?php echo $title['competency_name'] ?></td>
+                                    <td><?php echo btn_edit('admin/jobtitle/edit/' . $title['id']) ?></td>
+                                    <td><?php echo btn_delete('admin/jobtitle/delete/' . $title['id']) ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="3"> We could not find any users.</td>
+                                <td colspan="3"> Keine Stellenbezeichnung.</td>
                             </tr>
 
                         <?php endif; ?>

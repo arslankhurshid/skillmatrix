@@ -14,6 +14,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="<?php echo site_url('public_html/js/bootstrap-datepicker.js')?>"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
         <?php if (isset($sortable) && $sortable === TRUE): ?>
             <script type="text/javascript" src="<?php echo site_url('public_html/js/jquery-ui-1.9.2.custom.min.js'); ?>"></script>
             <script type="text/javascript" src="<?php echo site_url('public_html/js/jquery.mjs.nestedSortable.js'); ?>"></script>

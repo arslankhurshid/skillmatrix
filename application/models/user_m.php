@@ -4,17 +4,6 @@ Class user_m extends My_Model {
 
     protected $_table_name = 'users';
     protected $_order_by = '';
-    public $rules = array(
-        'email' => array(
-            'field' => 'email',
-            'label' => 'Email',
-            'rules' => 'trim|required|valid_email|xss_clean'
-        ),
-        'password' => array(
-            'field' => 'password',
-            'label' => 'Password',
-            'rules' => 'trim|required'),
-    );
     public $rules_admin = array(
         'fname' => array(
             'field' => 'fname',
@@ -33,11 +22,13 @@ Class user_m extends My_Model {
     }
 
     public function get_user_competencies($id = null, $single = null) {
-        $this->db->select('users.*, t3.name as competency_name');
+        $this->db->select('users.*, t3.name as competency_name, t4.name as parent_competency_name');
         $this->db->join('user_has_comp as t2', 't2.user_id = users.id', 'left');
         $this->db->join('competency as t3', 't3.id = t2.competency_id', 'left');
+        $this->db->join('competency as t4', 't4.id = t3.parent_id', 'left');
         $this->db->order_by("id", "desc");
         $results = $this->db->get('users')->result_array();
+//         echo $this->db->last_query();
         $array = array();
         $finalArray = array();
         foreach ($results as $page) {
@@ -56,15 +47,19 @@ Class user_m extends My_Model {
                 'dob' => $result['dob'],
                 'address' => $result['address'],
                 'ausbildung' => $result['ausbildung'],
+                'parent_competency_name' => $result['parent_competency_name'],
             );
         }
         $res = array();
         foreach ($data as $k => $v) {
             $res[$k] = array_merge($data[$k], $anotherArray[$k]);
         }
+//        echo "<pre>";
+//        print_r($results);
+//        echo "</pre>";
 
         return $res;
-//        echo $this->db->last_query();
+       
 //        return parent::get($id, $single);
     }
 
