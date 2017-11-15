@@ -5,6 +5,11 @@
     </div>
 <?php endif; ?>
 <?php echo form_open(); ?>
+<?php 
+//echo "<pre>";
+//print_r($compArray);
+//echo "</pre>";
+?>
 <table class="table">
     <tr>
         <td>Vorname:</td>
@@ -12,11 +17,11 @@
     </tr>
     <tr>
         <td>Nachname:</td>
-        <td><?php echo form_input('lname', set_value('lname', $user->fname)); ?></td>
+        <td><?php echo form_input('lname', set_value('lname', $user->lname)); ?></td>
     </tr>
     <tr>
         <td>Stellenbezeichnung:</td>
-        <td><?php echo form_input('job_title', set_value('job_title', $user->job_title)); ?></td>
+        <td><?php echo form_dropdown('job_title_id', $job_title, $this->input->post('job_title_id') ? $this->input->post('job_title_id') : $user->job_title_id, 'class="btn btn-default dropdown-toggle btn-select2" id="my_id"'); ?></td>
     </tr>
     <tr>
         <td>Geburtsdatum:</td>
@@ -29,10 +34,6 @@
     <tr>
         <td>Ausbildung:</td>
         <td><?php echo form_input('ausbildung', set_value('ausbildung', $user->ausbildung)); ?></td>
-    </tr>
-    <tr>
-        <td>Fachbereich:</td>
-        <td><?php echo form_dropdown('parent_id', $competency_without_parents, $this->input->post('parent_id') ? $this->input->post('parent_id') : $user->parent_id, 'class="btn btn-default dropdown-toggle btn-select2" id="my_id"'); ?></td>
     </tr>
 
     <tr>
@@ -57,7 +58,7 @@
     var drop_down = document.getElementById("my_id");
     $(function () {
 
-        $.post('<?php echo site_url('admin/dashboard/updateDropDownField/'); ?>', {dataType: "json"}, function (data) {
+        $.post('<?php echo site_url('admin/dashboard/order_competency/'), isset($user->id) ? $user->id :''; ?>', {dataType: "json"}, function (data) {
             console.info(data);
             $("#competency").html('');
             $("#competency").html(data);
@@ -71,7 +72,7 @@
 //            })
         });
     })
-    ;
+            ;
 
 
 </script>

@@ -28,6 +28,7 @@ class jobtitle extends Admin_Controller {
         else {
             $this->data['job_title'] = $this->job_title_m->get_newUser();
             $this->data['competencies'] = $this->competency_m->get_nested();
+            $this->data['sub_competencies'] = $this->competency_m->getSubCompArray($id);
         }
 
         $rules = $this->job_title_m->rules;

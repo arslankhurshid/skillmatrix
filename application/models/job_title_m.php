@@ -49,7 +49,7 @@ Class job_title_m extends My_Model {
         foreach ($data as $k => $v) {
             $res[$k] = array_merge($data[$k], $anotherArray[$k]);
         }
-        
+
 
         return $res;
 //        echo $this->db->last_query();
@@ -66,12 +66,12 @@ Class job_title_m extends My_Model {
     public function get_job_titles() {
         // Fetch all pages w/out parents
         // Return key => value pair array
-        $this->db->select('id, name');
-        $job_titles = parent::get();
-        $array = array(0 => 'Alle');
+        $this->db->select('id, title');
+        $job_titles = $this->db->get($this->_table_name)->result_array();
+        $array = array(0 => 'Keine');
         if (count($job_titles)) {
             foreach ($job_titles as $job_title) {
-                $array[$job_title->id] = $job_title->fname . " " . $job_title->lname;
+                $array[$job_title['id']] = $job_title['title'];
             }
         }
         return $array;

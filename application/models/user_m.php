@@ -21,6 +21,23 @@ Class user_m extends My_Model {
         parent::__construct();
     }
 
+    public function getUserCompetencies($id) {
+        $this->db->select('users.*, t3.name as competency_name, t3.id as competency_id, t2.skill_value, t3.parent_id, t4.name as parent_competency_name');
+        $this->db->join('user_has_comp as t2', 't2.user_id = users.id', 'left');
+        $this->db->join('competency as t3', 't3.id = t2.competency_id', 'left');
+        $this->db->join('competency as t4', 't4.id = t3.parent_id', 'left');
+        $this->db->where('users.id=', $id);
+
+        $results = $this->db->get('users')->result_array();
+
+        $array = array();
+        foreach ($results as $res) {
+            $array[$res['competency_id']] = $res['skill_value'];
+        }
+
+        return $array;
+    }
+
     public function get_user_competencies($id = null, $single = null) {
         $this->db->select('users.*, t3.name as competency_name, t4.name as parent_competency_name');
         $this->db->join('user_has_comp as t2', 't2.user_id = users.id', 'left');
@@ -28,7 +45,7 @@ Class user_m extends My_Model {
         $this->db->join('competency as t4', 't4.id = t3.parent_id', 'left');
         $this->db->order_by("id", "desc");
         $results = $this->db->get('users')->result_array();
-//         echo $this->db->last_query();
+//        echo $this->db->last_query();
         $array = array();
         $finalArray = array();
         foreach ($results as $page) {
@@ -43,7 +60,7 @@ Class user_m extends My_Model {
                 'id' => $result['id'],
                 'fname' => $result['fname'],
                 'lname' => $result['lname'],
-                'job_title' => $result['job_title'],
+                'job_title_id' => $result['job_title_id'],
                 'dob' => $result['dob'],
                 'address' => $result['address'],
                 'ausbildung' => $result['ausbildung'],
@@ -59,7 +76,7 @@ Class user_m extends My_Model {
 //        echo "</pre>";
 
         return $res;
-       
+
 //        return parent::get($id, $single);
     }
 
@@ -67,11 +84,10 @@ Class user_m extends My_Model {
         $users = new stdClass();
         $users->fname = '';
         $users->lname = '';
-        $users->job_title = '';
         $users->dob = date('d.y.Y');
         $users->ausbildung = '';
         $users->address = '';
-        $users->parent_id = 0;
+        $users->job_title_id = 0;
         return $users;
     }
 

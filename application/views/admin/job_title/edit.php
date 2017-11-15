@@ -30,9 +30,9 @@ function get_ol($array, $child = false) {
         $str .= $child == FALSE ? '<ol>' : '<ol>';
 
         foreach ($array as $item) {
-            echo "<pre>";
-            print_r($item);
-            echo "</pre>";
+//            echo "<pre>";
+//            print_r($item);
+//            echo "</pre>";
             $str .= '<li id="list_' . $item['id'] . '">';
             $str .= '<div>' . $item['name'] . '</div>';
             // if have children

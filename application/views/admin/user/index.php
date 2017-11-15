@@ -1,4 +1,4 @@
-<?php 
+<?php
 //echo "<pre>";
 //print_r($user_competencies);
 //echo "</pre>";
@@ -17,7 +17,7 @@
                             <td>Name</td>
                             <td >Stellenbezeichnung</td>
                             <td >Geburtsdatum</td>
-                            <td >Fachbereich</td>
+
                             <td >Kompetenzen</td>
                             <td>Bearbeiten</td>
                             <td>Löschen</td>
@@ -26,14 +26,16 @@
                     </thead>
                     <tbody>
                         <?php
+//                        echo "<pre>";
+//                        print_r($user_competencies);
+//                        echo "</pre>";
                         if (count($user_competencies)) :
                             foreach ($user_competencies as $user):
                                 ?>
                                 <tr>
                                     <td><?php echo anchor('admin/dashboard/edit/' . $user['id'], $user['fname'] . " " . $user['lname']); ?> </td>
-                                    <td><?php echo $user['job_title']; ?></td>
+                                    <td><?php echo $user['job_title_id']; ?></td>
                                     <td><?php echo $user['dob'] ?></td>
-                                    <td><?php echo $user['parent_competency_name'] ?></td>
                                     <td><?php echo $user['competency_name'] ?></td>
                                     <td><?php echo btn_edit('admin/dashboard/edit/' . $user['id']) ?></td>
                                     <td><?php echo btn_delete('admin/dashboard/delete/' . $user['id']) ?></td>

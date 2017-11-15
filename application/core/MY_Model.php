@@ -1,6 +1,5 @@
 <?php
 
-
 Class My_Model extends CI_Model {
 
     protected $_table_name = '';
@@ -18,7 +17,7 @@ Class My_Model extends CI_Model {
         if ($id != Null) {
             $filter = $this->_primary_filter;
             $id = $filter($id);
-            $this->db->where($this->_table_name.'.'.$this->_primary_key, $id);
+            $this->db->where($this->_table_name . '.' . $this->_primary_key, $id);
             $method = 'row';
         } elseif ($single == TRUE) {
             $method = 'row';
@@ -35,9 +34,9 @@ Class My_Model extends CI_Model {
 //        print_r($this->db->last_query());
 //        exit();
 //        $this->db->where('code', 'B');
-        
+
         $query = $this->db->get($this->_table_name)->$method();
-        
+
         return $query;
     }
 
@@ -47,7 +46,7 @@ Class My_Model extends CI_Model {
     }
 
     public function save($data, $id = Null) {
-       
+
         //set timestamps
         if ($this->_timestamps === TRUE) {
             $now = date('Y-m-d H:i:s');
@@ -70,12 +69,14 @@ Class My_Model extends CI_Model {
         }
         //update
         else {
+            echo $id;
             $filter = $this->_primary_filter;
             $id = $filter($id);
             $this->db->set($data);
             $this->db->where($this->_primary_key, $id);
             $this->db->update($this->_table_name);
-//            echo $this->db->last_query();
+            echo $this->db->last_query();
+            echo "<br>";
         }
     }
 
@@ -89,7 +90,6 @@ Class My_Model extends CI_Model {
     }
 
     public function delete($id) {
-        echo $id;
         $filter = $this->_primary_filter;
         $id = $filter($id);
 

@@ -70,27 +70,36 @@ Class competency_m extends My_Model {
 
         return parent::get($id, $single);
     }
-    
+
     public function getSubCompArray($id) {
-        // get sub cat in array for expense drop down
+        // get sub competency against parent competency in array for drop down
         $this->db->select('id, name');
-        $this->db->where('parent_id!=',0);
+        $this->db->where('parent_id=', $id);
 
         $categories = parent::get();
-        echo $this->db->last_query();
-        echo "<pre>";
-        print_r($array);
-        echo "</pre>";
+
         $array = array();
         if (count($categories)) {
             foreach ($categories as $category) {
                 $array[$category->id] = $category->name;
             }
         }
-        echo "<pre>";
-        print_r($array);
-        echo "</pre>";
-//        return $array;
+        return $array;
+    }
+
+    public function getParentChild($id=null) {
+        $this->db->select('id, name, parent_id');
+        $competencies = $this->db->get('competency')->result_array();
+        $array = array();
+        foreach ($competencies as $key => $competency) {
+
+            if (!$competency['parent_id']) {
+                $array[$competency['id']] = $competency;
+            } else {
+                $array[$competency['parent_id']]['child'][$competency['id']] = $competency['name'];
+            }
+        }
+        return $array;
     }
 
     public function get_no_parents($id = null) {
@@ -122,20 +131,6 @@ Class competency_m extends My_Model {
         }
 
 
-        return $array;
-    }
-
-    function updateArray($array, $findKey, $findValue) {
-
-        foreach ($array as $key => $value) {
-
-            if ($key == $findKey AND $value == $findValue) {
-                unset($array[$key]);
-                return $array;
-            }
-        }
-
-        $array[$findKey] = $findValue;
         return $array;
     }
 
