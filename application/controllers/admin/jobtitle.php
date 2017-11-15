@@ -19,7 +19,6 @@ class jobtitle extends Admin_Controller {
         $this->load->view('admin/_layout_main.php', $this->data);
     }
 
-
     public function edit($id = NULL) {
         if ($id) {
             $this->data['job_title'] = $this->job_title_m->get($id);
@@ -28,9 +27,10 @@ class jobtitle extends Admin_Controller {
         }
         else {
             $this->data['job_title'] = $this->job_title_m->get_newUser();
+            $this->data['competencies'] = $this->competency_m->get_nested();
         }
 
-        $rules = $this->job_title_m->rules_admin;
+        $rules = $this->job_title_m->rules;
 
         $this->form_validation->set_rules($rules);
         if ($this->form_validation->run() == TRUE) {
@@ -38,8 +38,6 @@ class jobtitle extends Admin_Controller {
 //            echo "<pre>";
 //            print_r($_POST);
 //            echo "</pre>";
-//            exit();
-
 //            exit();
 
             $data = $this->job_title_m->array_from_post(array(
@@ -71,7 +69,6 @@ class jobtitle extends Admin_Controller {
             redirect('admin/dashboard');
         }
         $this->data['subview'] = 'admin/job_title/edit';
-        $this->data['competency_without_parents'] = $this->competency_m->get_no_parents($id);
         $this->load->view('admin/_layout_main', $this->data);
     }
 

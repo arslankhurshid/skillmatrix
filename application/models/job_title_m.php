@@ -17,16 +17,17 @@ Class job_title_m extends My_Model {
     }
 
     public function get_job_title_competencies($id = null, $single = null) {
-        $this->db->select('job_title.*, t3.name as competency_name');
+        $this->db->select('job_title.*, t3.name as competency_name, t4.name as parent_competency_name');
         $this->db->join('job_title_has_comp as t2', 't2.job_title_id = job_title.id', 'left');
         $this->db->join('competency as t3', 't3.id = t2.competency_id', 'left');
+        $this->db->join('competency as t4', 't4.id = t3.parent_id', 'left');
         $this->db->order_by("id", "desc");
 
         $results = $this->db->get('job_title')->result_array();
-        echo "<pre>";
-        print_r($results);
-        echo "</pre>";
-        echo $this->db->last_query();
+//        echo "<pre>";
+//        print_r($results);
+//        echo "</pre>";
+//        echo $this->db->last_query();
 //        exit();
         $array = array();
         $finalArray = array();
@@ -41,6 +42,7 @@ Class job_title_m extends My_Model {
             $anotherArray[$result['id']] = array(
                 'id' => $result['id'],
                 'title' => $result['title'],
+                'parent_competency_name' => $result['parent_competency_name'],
             );
         }
         $res = array();
@@ -49,21 +51,16 @@ Class job_title_m extends My_Model {
         }
         
 
-//        return $res;
+        return $res;
 //        echo $this->db->last_query();
 //        return parent::get($id, $single);
     }
 
     public function get_newUser() {
-        $job_titles = new stdClass();
-        $job_titles->fname = '';
-        $job_titles->lname = '';
-        $job_titles->job_title = '';
-        $job_titles->dob = date('d.y.Y');
-        $job_titles->ausbildung = '';
-        $job_titles->address = '';
-        $job_titles->parent_id = 0;
-        return $job_titles;
+        $job_title = new stdClass();
+        $job_title->title = '';
+        $job_title->parent_id = 0;
+        return $job_title;
     }
 
     public function get_job_titles() {

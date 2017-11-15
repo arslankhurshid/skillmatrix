@@ -55,9 +55,9 @@
     });
 
     var drop_down = document.getElementById("my_id");
-    drop_down.onchange = function () {
+    $(function () {
 
-        $.post('<?php echo site_url('admin/dashboard/updateDropDownField/'); ?>' + drop_down.value, {dataType: "json"}, function (data) {
+        $.post('<?php echo site_url('admin/dashboard/updateDropDownField/'); ?>', {dataType: "json"}, function (data) {
             console.info(data);
             $("#competency").html('');
             $("#competency").html(data);
@@ -70,7 +70,8 @@
 //                console.log(key + ":" + value)
 //            })
         });
-    };
+    })
+    ;
 
 
 </script>
