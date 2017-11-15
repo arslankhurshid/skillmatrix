@@ -21,7 +21,7 @@ Class user_m extends My_Model {
         parent::__construct();
     }
 
-    public function getUserCompetencies($id) {
+    public function getUserCompetencies($id=null) {
         $this->db->select('users.*, t3.name as competency_name, t3.id as competency_id, t2.skill_value, t3.parent_id, t4.name as parent_competency_name');
         $this->db->join('user_has_comp as t2', 't2.user_id = users.id', 'left');
         $this->db->join('competency as t3', 't3.id = t2.competency_id', 'left');

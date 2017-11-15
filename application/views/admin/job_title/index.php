@@ -23,7 +23,7 @@
                             foreach ($job_title_competencies as $title):
                                 ?>
                                 <tr>
-                                    <td><?php echo anchor('admin/dashboard/edit/' . $title['id'], $title['title']); ?> </td>
+                                    <td><?php echo anchor('admin/jobtitle/edit/' . $title['id'], $title['title']); ?> </td>
                                     <td><?php echo $title['parent_competency_name'] ?></td>
                                     <td><?php echo $title['competency_name'] ?></td>
                                     <td><?php echo btn_edit('admin/jobtitle/edit/' . $title['id']) ?></td>
