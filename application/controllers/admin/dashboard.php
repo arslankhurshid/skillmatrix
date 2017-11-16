@@ -57,29 +57,23 @@ class dashboard extends Admin_Controller {
             if (isset($_POST) && !empty($_POST['competencies'])) {
                 $competencies = $_POST['competencies'];
                 if (!empty($competencies)) {
+                    $this->deleteUserComp($id);
                     foreach ($_POST['competencies'] as $k => $v) {
                         // get the sub comp
                         if (isset($_POST['competency-' . $v]) && array_filter($_POST['competency-' . $v])) {
-                            echo "all is well2";
-                            if (!empty($lastInsertedID)) {
-                                $this->user_has_comp_m->save(array(
-                                    'user_id' => $lastInsertedID,
-                                    'competency_id' => $v,
-                                    'skill_value' => $_POST['competency-' . $v][0],
-                                ));
-                            } else {
-                                $this->deleteUserComp($id);
-                                $this->user_has_comp_m->save(array(
-                                    'user_id' => $id,
-                                    'competency_id' => $v,
-                                    'skill_value' => $_POST['competency-' . $v][0],
-                                ));
-                            }
+                            if (empty($lastInsertedID))
+                                $lastInsertedID = $id;
+                            $this->user_has_comp_m->save(array(
+                                'user_id' => $lastInsertedID,
+                                'competency_id' => $v,
+                                'skill_value' => $_POST['competency-' . $v][0],
+                            ));
+                            echo $this->db->last_query();
                         }
                     }
                 }
             }
-//            redirect('admin/dashboard');
+            redirect('admin/dashboard');
         }
         $this->data['subview'] = 'admin/user/edit';
         $this->data['job_title'] = $this->job_title_m->get_job_titles();
@@ -93,7 +87,8 @@ class dashboard extends Admin_Controller {
     public function delete($id) {
 
         $this->user_m->delete($id);
-        redirect('admin/user');
+        $this->deleteUserComp($id);
+        redirect('admin/dashboard');
     }
 
     public function order_competency($id = null) {
@@ -102,60 +97,6 @@ class dashboard extends Admin_Controller {
         $this->data['selectedArray'] = $this->user_m->getUserCompetencies($id);
         $this->data['compArray'] = $this->competency_m->getParentChild();
         $this->load->view('admin/user/order_competency', $this->data);
-    }
-
-    public function updateDropDownField($id = null) {
-
-        if ($id == 0) {
-            $this->data['sub_competencies'] = array();
-        } else {
-            $this->data['sub_competencies'] = $this->competency_m->getSubCompArray($id);
-        }
-        $compArray = $this->competency_m->getParentChild();
-
-//        echo "<pre>";
-//        print_r($compArray);
-//        echo "</pre>";
-// old version
-        if (count($this->data['sub_competencies'])) {
-            echo '<div class="form-group">
-            <label class="">Kompetenz</label>
-                <ul id="tree1">';
-
-            foreach ($this->data['sub_competencies'] as $key => $value) {
-
-                $selected = 'checked';
-                ?>
-                <li class="col-md-12" style="margin-top: 10px;">
-                    <div class="col-md-1">
-                        <input type="checkbox" name="competencies[]" value="<?php echo $key; ?>" <?php echo $selected; ?> style="display: none">
-                    </div>
-                    <div class="col-md-7">
-                        <label><?php echo $value; ?></label>
-                    </div>
-                    <div class="col-md-4">
-                        <select name="competency-<?php echo $key ?>[]" class="form-control">
-
-                <?php
-                $data = array('keine' => 'Keine', 'basic' => 'Basic', 'intermediate' => 'Intermediate', 'advanced' => 'Advanced', 'expert' => 'Expert');
-                foreach ($data as $key => $val) {
-                    echo '<option value = "' . $key . '">' . $val . '</option>';
-                }
-                ?>
-
-                        </select>
-
-
-
-                    </div>
-                </li>
-                <?php
-            }
-            echo '</ul></div>';
-        }
-//        echo json_encode($this->data['sub_competencies']);
-//        $competencies = $this->competency_m->get_with_parent($id);
-//        echo json_encode($competencies);
     }
 
 }

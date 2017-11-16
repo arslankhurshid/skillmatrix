@@ -12,8 +12,11 @@ Class user_has_comp_m extends My_Model {
     }
 
     public function deleteUserComp($id) {
+        if (!$id) {
+            return FALSE;
+        }
         $this->db->where('user_id', $id);
-        $del = parent::delete($id);
+        $this->db->delete($this->_table_name);
     }
 
 }

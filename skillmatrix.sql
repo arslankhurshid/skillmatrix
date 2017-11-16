@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 15. Nov 2017 um 16:53
--- Server-Version: 10.1.19-MariaDB
--- PHP-Version: 5.6.28
+-- Generation Time: Nov 16, 2017 at 12:41 AM
+-- Server version: 10.1.9-MariaDB
+-- PHP Version: 5.6.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Datenbank: `skillmatrix`
+-- Database: `skillmatrix`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `competency`
+-- Table structure for table `competency`
 --
 
 CREATE TABLE `competency` (
@@ -34,7 +34,7 @@ CREATE TABLE `competency` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Daten für Tabelle `competency`
+-- Dumping data for table `competency`
 --
 
 INSERT INTO `competency` (`id`, `name`, `order`, `parent_id`) VALUES
@@ -58,7 +58,7 @@ INSERT INTO `competency` (`id`, `name`, `order`, `parent_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `job_title`
+-- Table structure for table `job_title`
 --
 
 CREATE TABLE `job_title` (
@@ -67,16 +67,17 @@ CREATE TABLE `job_title` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Daten für Tabelle `job_title`
+-- Dumping data for table `job_title`
 --
 
 INSERT INTO `job_title` (`id`, `title`) VALUES
-(1, 'Softwareentwickler');
+(1, 'Softwareentwickler'),
+(2, 'Network Admin');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `job_title_has_comp`
+-- Table structure for table `job_title_has_comp`
 --
 
 CREATE TABLE `job_title_has_comp` (
@@ -86,10 +87,23 @@ CREATE TABLE `job_title_has_comp` (
   `skill_value` varchar(120) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `job_title_has_comp`
+--
+
+INSERT INTO `job_title_has_comp` (`id`, `job_title_id`, `competency_id`, `skill_value`) VALUES
+(6, 2, 8, '1'),
+(7, 2, 13, '3'),
+(8, 2, 14, '4'),
+(9, 2, 17, '4'),
+(23, 1, 8, '1'),
+(24, 1, 12, '1'),
+(25, 1, 14, '1');
+
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `migrations`
+-- Table structure for table `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -97,7 +111,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Daten für Tabelle `migrations`
+-- Dumping data for table `migrations`
 --
 
 INSERT INTO `migrations` (`version`) VALUES
@@ -106,7 +120,7 @@ INSERT INTO `migrations` (`version`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `skills`
+-- Table structure for table `skills`
 --
 
 CREATE TABLE `skills` (
@@ -115,7 +129,7 @@ CREATE TABLE `skills` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Daten für Tabelle `skills`
+-- Dumping data for table `skills`
 --
 
 INSERT INTO `skills` (`id`, `name`) VALUES
@@ -127,7 +141,7 @@ INSERT INTO `skills` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `strength`
+-- Table structure for table `strength`
 --
 
 CREATE TABLE `strength` (
@@ -140,7 +154,7 @@ CREATE TABLE `strength` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -154,14 +168,12 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Daten für Tabelle `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `fname`, `lname`, `dob`, `address`, `ausbildung`, `job_title_id`) VALUES
-(1, 'Employee', 'A', '25.10.1985', 'Dr. Robert Graf Strasse', 'FH', 0),
 (2, 'Emplyee', 'B', '13.17.1980', 'Mosserhofgasse 14, 8010 Graz', 'Ing', 0),
 (3, 'Employee', 'C', '13.17.2017', 'St. Peter gasse 23, 8010. Graz', 'Master in Informatik, First level tech support', 0),
-(6, 'Emplyee', 'D', '01.05.1980', 'Test', 'Test1,Test2', 0),
 (7, 'Name', 'A', '01.11.1980', 'Dr. Robert Graf Strasse 12/3/11', 'Ing', 0),
 (8, 'Name', 'E', '06.05.1970', 'Mosserhofgasse 14, 8010 Graz', 'IT', 0),
 (17, 'Test', 'Mitarbeiter23', '15.02.2017', 'Mosserhofgasse 14, 8010 Graz', 'SWe Ing', 1);
@@ -169,7 +181,7 @@ INSERT INTO `users` (`id`, `fname`, `lname`, `dob`, `address`, `ausbildung`, `jo
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `user_has_comp`
+-- Table structure for table `user_has_comp`
 --
 
 CREATE TABLE `user_has_comp` (
@@ -180,7 +192,7 @@ CREATE TABLE `user_has_comp` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Daten für Tabelle `user_has_comp`
+-- Dumping data for table `user_has_comp`
 --
 
 INSERT INTO `user_has_comp` (`id`, `user_id`, `competency_id`, `skill_value`) VALUES
@@ -192,106 +204,100 @@ INSERT INTO `user_has_comp` (`id`, `user_id`, `competency_id`, `skill_value`) VA
 (7, 7, 9, '2'),
 (8, 8, 11, '2'),
 (9, 8, 14, '1'),
-(82, 17, 6, '2'),
-(83, 17, 7, '4'),
-(84, 17, 9, '3'),
-(85, 17, 19, '1'),
-(86, 17, 6, '2'),
-(87, 17, 7, '4'),
-(88, 17, 8, '4'),
-(89, 17, 9, '3'),
-(90, 17, 19, '1'),
-(91, 17, 6, '2'),
-(92, 17, 7, '4'),
-(93, 17, 8, '4'),
-(94, 17, 9, '3'),
-(95, 17, 19, '1');
+(109, 17, 6, '1'),
+(110, 17, 8, '2'),
+(111, 17, 11, '3'),
+(112, 17, 21, '4'),
+(114, 3, 6, '1'),
+(115, 3, 9, '4'),
+(116, 2, 7, '4'),
+(117, 2, 19, '4');
 
 --
--- Indizes der exportierten Tabellen
+-- Indexes for dumped tables
 --
 
 --
--- Indizes für die Tabelle `competency`
+-- Indexes for table `competency`
 --
 ALTER TABLE `competency`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `job_title`
+-- Indexes for table `job_title`
 --
 ALTER TABLE `job_title`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `job_title_has_comp`
+-- Indexes for table `job_title_has_comp`
 --
 ALTER TABLE `job_title_has_comp`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `skills`
+-- Indexes for table `skills`
 --
 ALTER TABLE `skills`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `strength`
+-- Indexes for table `strength`
 --
 ALTER TABLE `strength`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `user_has_comp`
+-- Indexes for table `user_has_comp`
 --
 ALTER TABLE `user_has_comp`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT für exportierte Tabellen
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT für Tabelle `competency`
+-- AUTO_INCREMENT for table `competency`
 --
 ALTER TABLE `competency`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
--- AUTO_INCREMENT für Tabelle `job_title`
+-- AUTO_INCREMENT for table `job_title`
 --
 ALTER TABLE `job_title`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT für Tabelle `job_title_has_comp`
+-- AUTO_INCREMENT for table `job_title_has_comp`
 --
 ALTER TABLE `job_title_has_comp`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
--- AUTO_INCREMENT für Tabelle `skills`
+-- AUTO_INCREMENT for table `skills`
 --
 ALTER TABLE `skills`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT für Tabelle `strength`
+-- AUTO_INCREMENT for table `strength`
 --
 ALTER TABLE `strength`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT für Tabelle `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
--- AUTO_INCREMENT für Tabelle `user_has_comp`
+-- AUTO_INCREMENT for table `user_has_comp`
 --
 ALTER TABLE `user_has_comp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

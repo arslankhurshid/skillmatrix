@@ -16,6 +16,24 @@ Class job_title_m extends My_Model {
         parent::__construct();
     }
 
+    public function getJobTitleCompetencies($id = null) {
+        $this->db->select('job_title.*, t3.name as competency_name, t3.id as competency_id,t2.skill_value, t3.parent_id,t4.name as parent_competency_name');
+        $this->db->join('job_title_has_comp as t2', 't2.job_title_id = job_title.id', 'left');
+        $this->db->join('competency as t3', 't3.id = t2.competency_id', 'left');
+        $this->db->join('competency as t4', 't4.id = t3.parent_id', 'left');
+        $this->db->where('job_title.id=', $id);
+
+        $results = $this->db->get($this->_table_name)->result_array();
+//        echo $this->db->last_query();
+
+        $array = array();
+        foreach ($results as $res) {
+            $array[$res['competency_id']] = $res['skill_value'];
+        }
+
+        return $array;
+    }
+
     public function get_job_title_competencies($id = null, $single = null) {
         $this->db->select('job_title.*, t3.name as competency_name, t4.name as parent_competency_name');
         $this->db->join('job_title_has_comp as t2', 't2.job_title_id = job_title.id', 'left');
@@ -56,10 +74,10 @@ Class job_title_m extends My_Model {
 //        return parent::get($id, $single);
     }
 
-    public function get_newUser() {
+    public function get_newTitle() {
         $job_title = new stdClass();
         $job_title->title = '';
-        $job_title->parent_id = 0;
+
         return $job_title;
     }
 
