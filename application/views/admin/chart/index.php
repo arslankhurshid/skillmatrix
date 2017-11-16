@@ -2,9 +2,9 @@
     <div id="orderResult"></div>
     <h2>Netzdiagramm</h2>
     <?php
-//    echo "<pre>";
-//    print_r($users);
-//    echo "</pre>";
+    echo "<pre>";
+    print_r($compArray);
+    echo "</pre>";
     ?>
     <?php echo form_open('', array('onsubmit' => 'return validate();')); ?>
 
@@ -28,15 +28,105 @@
     </div>
     <br>
     <?php echo form_close(); ?>
-    
-    <canvas id="marksChart" width="600" height="400"></canvas>
+    <div id="competency">
+
+    </div>
+
+    <!--<canvas id="canvas" width="600" height="400"></canvas>-->
+
+</script>
 
 
+
+<canvas id="lineChart" width="600" height="400"></canvas>
 
 </section>
 
 <script>
-    var marksCanvas = document.getElementById("marksChart");
+
+    $(window).load(function () {/*code here*/
+
+
+    $.ajax({
+    type: "POST",
+            dataType: "json",
+            url: '<?php echo site_url('admin/chart/getCompetency') ?>',
+//            data: {data: $(dataString).serializeArray()},
+            cache: false,
+            success: function (data) {
+
+            console.info(data.replace(/["]/g, ""));
+            const CHART = document.getElementById("lineChart");
+//            console.log(Chart.defaults.scale.ticks);
+//            Chart.defaults.scale.ticks.beginAtZero = false;
+            let barChart = new Chart(CHART, {
+
+            type: 'bar',
+                    data:{
+                    labels: ["PHP", "JavaScript","HTML", "C++","Java", "Angular"],
+                            datasets: [{
+                            label: "Employee A",
+                                    borderColor: "#00FF00",
+                                    borderWidth:2,
+                                    data: [40, 30,30, 50, 20,25],
+                            },
+                            {
+                            label:"Employee B",
+                                    borderColor: "rgba(200,0,0,0.6)",
+                                    borderWidth:2,
+                                    data: [30, 50,30, 50, 40, 10],
+                            }],
+                    },
+            });
+            },
+            error: function (e) {
+            console.info(e);
+            },
+    });
+    });</script>
+
+<script>
+//    const CHART = document.getElementById("lineChart");
+//    console.log(Chart.defaults.scale.ticks);
+//    Chart.defaults.scale.ticks.beginAtZero = false;
+//    let barChart = new Chart(CHART, {
+//    type: 'bar',
+//            data:{
+//            labels: ["English", "Maths", "Physics", "Chemistry", "Biology", "History"],
+//                    datasets: [{
+//                    label: "Employee A",
+////                            backgroundColor: "rgba(00,255,00,0.1)",
+//                            borderColor: "#00FF00",
+//                            borderWidth:2,
+////                fill: false,
+////                radius: 6,
+////                pointRadius: 6,
+////                pointBorderWidth: 3,
+////                pointBackgroundColor: "orange",
+////                pointBorderColor: "rgba(200,0,0,0.6)",
+////                pointHoverRadius: 10,
+//                            data: [30, 75, 70, 80, 60, 100],
+////                            data:[Basic, Intermediate, Advance, Expert]
+//                    }, {
+//                    label: "Employee B",
+////                            backgroundColor: "rgba(200,0,0,0.6)",
+//                            borderColor: "rgba(200,0,0,0.6)",
+//                            borderWidth:2,
+////                fill: false,
+////                radius: 6,
+////                pointRadius: 6,
+////                pointBorderWidth: 3,
+////                pointBackgroundColor: "orange",
+////                pointBorderColor: "rgba(200,0,0,0.6)",
+////                pointHoverRadius: 10,
+//                            data: [50, 50, 70, 80, 60, 80]
+////                            data:[Basic, Intermediate, Advance, Expert]
+//                    }]
+//            }
+//    });
+</script>
+<!--<script>-->
+<!--    var marksCanvas = document.getElementById("marksChart");
 
     Chart.defaults.global.defaultFontFamily = "Lato";
     Chart.defaults.global.defaultFontSize = 18;
@@ -109,27 +199,4 @@
         });
     }
 
-    $(window).load(function () {/*code here*/
-
-        var drop_down_type = $('#my_id1').find('option:selected').val();
-        var drop_down_account = $('#my_id2').find('option:selected').val();
-        var drop_down_date = $('#my_id3').find('option:selected').val();
-
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: '',
-//            data: {data: $(dataString).serializeArray()},
-            cache: false,
-            success: function (data) {
-
-
-            },
-            error: function (e) {
-//                console.info(e));
-            },
-        });
-
-    });
-
-</script>
+--> 

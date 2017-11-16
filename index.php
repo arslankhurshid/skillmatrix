@@ -57,7 +57,7 @@ date_default_timezone_get('Europe/Austria');
     $root = dirname(__FILE__);
         switch ($root)
         {
-        case 'D:\xampp\htdocs\skillmatrix':
+        case 'C:\xampp\htdocs\skillmatrix':
             define('ENVIRONMENT', 'development');
             break;
         default :

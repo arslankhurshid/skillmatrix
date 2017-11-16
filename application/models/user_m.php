@@ -21,7 +21,7 @@ Class user_m extends My_Model {
         parent::__construct();
     }
 
-    public function getUserCompetencies($id=null) {
+    public function getUserCompetencies($id = null) {
         $this->db->select('users.*, t3.name as competency_name, t3.id as competency_id, t2.skill_value, t3.parent_id, t4.name as parent_competency_name');
         $this->db->join('user_has_comp as t2', 't2.user_id = users.id', 'left');
         $this->db->join('competency as t3', 't3.id = t2.competency_id', 'left');
@@ -36,6 +36,33 @@ Class user_m extends My_Model {
         }
 
         return $array;
+    }
+
+    // get user competencies for Diagram
+    public function getUserCompArray($id = null) {
+        $this->db->select('users.*, t3.name as competency_name, t3.id as competency_id, t2.skill_value, t3.parent_id, t4.name as parent_competency_name, t5.name as skill_name');
+        $this->db->join('user_has_comp as t2', 't2.user_id = users.id', 'left');
+        $this->db->join('competency as t3', 't3.id = t2.competency_id', 'left');
+        $this->db->join('competency as t4', 't4.id = t3.parent_id', 'left');
+        $this->db->join('skills as t5', 't5.id = t2.skill_value', 'left');
+//        $this->db->where('users.id=', $id);
+
+        $results = $this->db->get('users')->result_array();
+//        echo $this->db->last_query();
+        
+        $array = array();
+        foreach ($results as $competency) {
+            if (!$competency['parent_id']) {
+                $array[$competency['id']] = $competency;
+            } else {
+                $array[$competency['id']][] = $competency;
+            }
+        }
+        return $array;
+//        echo "<pre>";
+//        print_r($array);
+//        echo "</pre>";
+//        return $array;
     }
 
     public function get_user_competencies($id = null, $single = null) {

@@ -71,12 +71,13 @@ Class competency_m extends My_Model {
         return parent::get($id, $single);
     }
 
-    public function getSubCompArray($id) {
+    public function getSubCompArray() {
         // get sub competency against parent competency in array for drop down
         $this->db->select('id, name');
-        $this->db->where('parent_id=', $id);
+        $this->db->where('parent_id!=', 0);
 
         $categories = parent::get();
+//        echo $this->db->last_query();
 
         $array = array();
         if (count($categories)) {

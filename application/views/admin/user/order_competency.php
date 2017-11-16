@@ -17,6 +17,7 @@ if (count($compArray)) {
             <label><?php echo $value['name']; ?></label>
         </div>
         <ul id="tree1">
+              <?php if (isset($value['child']) && !empty($value['child'])){?>
             <label><?php foreach ($value['child'] as $k => $val) { ?>
                     <li class="col-md-12" style="margin-top: 10px;">
                         <div class="col-md-1">
@@ -53,7 +54,7 @@ if (count($compArray)) {
                     ?></li></label>
 
 
-        </ul>
+        </ul><?php } ?>
         <?php
     }
     echo '</ul></div>';
