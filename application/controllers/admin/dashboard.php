@@ -60,7 +60,7 @@ class dashboard extends Admin_Controller {
                     $this->deleteUserComp($id);
                     foreach ($_POST['competencies'] as $k => $v) {
                         // get the sub comp
-                        if (isset($_POST['competency-' . $v]) && array_filter($_POST['competency-' . $v])) {
+                        if (isset($_POST['competency-' . $v]) && $_POST['competency-' . $v]) {
                             if (empty($lastInsertedID))
                                 $lastInsertedID = $id;
                             $this->user_has_comp_m->save(array(
@@ -68,7 +68,7 @@ class dashboard extends Admin_Controller {
                                 'competency_id' => $v,
                                 'skill_value' => $_POST['competency-' . $v][0],
                             ));
-                            echo $this->db->last_query();
+//                            echo $this->db->last_query();
                         }
                     }
                 }

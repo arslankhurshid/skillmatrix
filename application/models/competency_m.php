@@ -25,15 +25,26 @@ Class competency_m extends My_Model {
         $competency = new stdClass();
         $competency->name = '';
         $competency->parent_id = 0;
+
         return $competency;
+    }
+
+    public function getLabels() {
+        $query = $this->db->query("SELECT name FROM competency WHERE parent_id != 0;");
+        $skills = $query->result_array();
+        $response = array();
+        foreach ($skills as $key => $val) {
+            $response[] = $val['name'];
+        }
+        return $response;
     }
 
     public function delete($id) {
         //delete a competency
         parent::delete($id);
         //Reset parent id for its children
-        $this->db->set('parent_id', 0); //value that used to update column  
-        $this->db->where('parent_id', $id); //which row want to upgrade  
+        $this->db->set('parent_id', 0); //value that used to update column
+        $this->db->where('parent_id', $id); //which row want to upgrade
         $this->db->update($this->_table_name);  //table name
     }
 
@@ -48,6 +59,7 @@ Class competency_m extends My_Model {
                 $array[$competency['parent_id']]['children'][] = $competency;
             }
         }
+
         return $array;
     }
 
@@ -62,7 +74,7 @@ Class competency_m extends My_Model {
         }
     }
 
-    public function get_with_parent($id = NULL, $single = Null) {
+    public function get_with_parent($id = null, $single = null) {
         $this->db->select('competency.*, p.name as parent_name');
         $this->db->join('competency as p', 'competency.parent_id = p.id', 'left');
 //        $test = parent::get($id, $single);
@@ -85,10 +97,11 @@ Class competency_m extends My_Model {
                 $array[$category->id] = $category->name;
             }
         }
+
         return $array;
     }
 
-    public function getParentChild($id=null) {
+    public function getParentChild($id = null) {
         $this->db->select('id, name, parent_id');
         $competencies = $this->db->get('competency')->result_array();
         $array = array();
@@ -100,6 +113,7 @@ Class competency_m extends My_Model {
                 $array[$competency['parent_id']]['child'][$competency['id']] = $competency['name'];
             }
         }
+
         return $array;
     }
 
@@ -130,7 +144,6 @@ Class competency_m extends My_Model {
                 }
             }
         }
-
 
         return $array;
     }

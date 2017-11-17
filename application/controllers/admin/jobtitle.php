@@ -51,7 +51,7 @@ class jobtitle extends Admin_Controller {
                     $this->deleteJobComp($id);
                     foreach ($_POST['competencies'] as $k => $v) {
                         // get the sub comp
-                        if (isset($_POST['competency-' . $v]) && array_filter($_POST['competency-' . $v])) {
+                        if (isset($_POST['competency-' . $v]) && $_POST['competency-' . $v]) {
                             if (empty($lastInsertedID))
                                 $lastInsertedID = $id;
                             $this->job_title_has_comp_m->save(array(
