@@ -13,8 +13,8 @@ class dashboard extends Admin_Controller {
     }
 
     function index() {
-        $this->data['users'] = $this->user_m->get();
-        $this->data['user_competencies'] = $this->user_m->get_user_competencies();
+//        $this->data['users'] = $this->user_m->get();
+        $this->data['users'] = $this->user_m->get_user_view_details();
         //Load view
         $this->data['subview'] = 'admin/user/index';
         $this->load->view('admin/_layout_main.php', $this->data);

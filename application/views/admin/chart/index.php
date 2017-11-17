@@ -1,3 +1,8 @@
+<?php 
+//echo "<pre>";
+//print_r($userCompArray);
+//echo "</pre>";
+?>
 <section>
     <div id="orderResult"></div>
     <h2>Netzdiagramm</h2>
@@ -6,7 +11,7 @@
     <div class="well carousel-search hidden-sm">
 
         <div id="dropdown" style="">
-            <?php echo form_dropdown('type', $users, $this->input->post('type') ? $this->input->post('type') : '$account->from_bank', 'class="btn btn-default dropdown-toggle btn-select2" id="my_id1"'); ?>
+            <?php echo form_dropdown('type', $users, $this->input->post('type') ? $this->input->post('type') : '$account->from_bank', 'class="btn btn-default dropdown-toggle btn-select2" id="user_id" onchange="some_function()"'); ?>
             &nbsp;&nbsp;
 
             <div class="clr"></div>
@@ -16,7 +21,7 @@
         </div>
         <div id="buttons">
             <?php
-            echo form_button('button', 'Apply', 'class="btn btn-primary btn-xs" onClick="some_function()"');
+//            echo form_button('button', 'Apply', 'class="btn btn-primary btn-xs" onClick="some_function()"');
             ?>
 
             <div class="clr"></div>
@@ -36,64 +41,111 @@
 </section>
 
 <script>
-
-    $(window).load(function () {/*code here*/
-        var labels = <?php echo $competency_labels; ?>;
-
-        $.ajax({
-            type: "POST",
+    function some_function() {
+    var labels = <?php echo $competency_labels; ?>;
+    var drop_down = document.getElementById("user_id");
+    $.ajax({
+    type: "POST",
             dataType: "json",
-            url: '<?php echo site_url('admin/chart/getCompetency') ?>',
+            url: '<?php echo site_url('admin/chart/getCompetency/') ?>' + drop_down.value,
 //            data: {data: $(dataString).serializeArray()},
             cache: false,
             success: function (data) {
-                const CHART = document.getElementById("lineChart");
-                var barChart = new Chart(CHART, {
-                    type: 'radar',
+            const CHART = document.getElementById("lineChart");
+            var barChart = new Chart(CHART, {
+            type: 'radar',
                     data: {
-                        labels: labels,
-                        datasets: [{
-                                label: "Employee A",
-                                borderColor: "#00FF00",
-                                borderWidth: 2,
-                                data: <?php echo $userCompArray; ?>,
+                    labels: data.competency_labels,
+                            datasets: [{
+                            label: "Ist",
+                                    borderColor: "#00FF00",
+                                    borderWidth: 2,
+                                    data: data.userCompArray,
                             },
                             {
-                                label: "Employee B",
-                                borderColor: "rgba(200,0,0,0.6)",
-                                borderWidth: 2,
-                                data: <?php echo $jobsCompArray; ?>,
+                            label: "Stellenanforderungen",
+                                    borderColor: "rgba(200,0,0,0.6)",
+                                    borderWidth: 2,
+                                    data: data.jobsCompArray,
                             }],
                     },
                     options: {
-                        scale: {
-                            ticks: {
-                                suggestedMin: 0,
-                                suggestedMax: 4,
-                                stepSize: 1,
-                                callback: function (value) {
-                                    if (value == 1) {
-                                        return "Basic";
-                                    }
-                                    if (value == 2) {
-                                        return "Intermediate";
-                                    }
-                                    if (value == 3) {
-                                        return "Advance";
-                                    }
-                                    if (value == 4) {
-                                        return "Expert";
-                                    }
-                                }
+                    scale: {
+                    ticks: {
+                    suggestedMin: 0,
+                            suggestedMax: 4,
+                            stepSize: 1,
+                            callback: function (value) {
+                            if (value == 1) {
+                            return "Basic";
                             }
-                        }
+                            if (value == 2) {
+                            return "Intermediate";
+                            }
+                            if (value == 3) {
+                            return "Advance";
+                            }
+                            if (value == 4) {
+                            return "Expert";
+                            }
+                            }
                     }
-                });
+                    }
+                    }
+            });
             },
             error: function (e) {
-                console.info(e);
+            console.info(e);
             },
-        });
     });
+    }
+
+</script>
+
+<script>
+    var labels = <?php echo $competency_labels; ?>;
+    const CHART = document.getElementById("lineChart");
+    var barChart = new Chart(CHART, {
+    type: 'radar',
+            data: {
+            labels: labels,
+                    datasets: [{
+                    label: "Ist",
+                            borderColor: "#00FF00",
+                            borderWidth: 2,
+                            data: <?php echo $userCompArray; ?>,
+                    },
+                    {
+                    label: "Stellenanforderungen",
+                            borderColor: "rgba(200,0,0,0.6)",
+                            borderWidth: 2,
+                            data: <?php echo $jobsCompArray; ?>,
+                    }],
+            },
+            options: {
+            scale: {
+            ticks: {
+            suggestedMin: 0,
+                    suggestedMax: 4,
+                    stepSize: 1,
+                    callback: function (value) {
+                    if (value == 1) {
+                    return "Basic";
+                    }
+                    if (value == 2) {
+                    return "Intermediate";
+                    }
+                    if (value == 3) {
+                    return "Advance";
+                    }
+                    if (value == 4) {
+                    return "Expert";
+                    }
+                    }
+            }
+            }
+            }
+    });
+
 </script>
 

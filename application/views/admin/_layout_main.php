@@ -6,7 +6,7 @@
                 <a class="navbar-brand" href="#"><?php echo $meta_title; ?></a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="<?php echo base_url('/admin/dashboard'); ?>">Dashboard</a></li>
+                <li class="active"><a href="<?php echo base_url('/admin/dashboard'); ?>">Mitarbeiter</a></li>
                 <li><?php echo anchor('admin/competency', 'Kompetenz'); ?></li>
                 <li><?php echo anchor('admin/competency/order', 'Kompetenzen sortieren'); ?></li>
                 <li><?php echo anchor('admin/jobtitle', 'Stellenbezeichnung'); ?></li>

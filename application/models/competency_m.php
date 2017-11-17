@@ -36,6 +36,7 @@ Class competency_m extends My_Model {
         foreach ($skills as $key => $val) {
             $response[] = $val['name'];
         }
+
         return $response;
     }
 

@@ -1,8 +1,3 @@
-<?php
-//echo "<pre>";
-//print_r($user_competencies);
-//echo "</pre>";
-?>
 <section>
     <h2>Mitarbeiter</h2>
     <?php echo anchor('admin/dashboard/edit', '<span class="glyphicon glyphicon-plus"> </span>Erstellen'); ?>
@@ -18,7 +13,7 @@
                             <td >Stellenbezeichnung</td>
                             <td >Geburtsdatum</td>
 
-                            <td >Kompetenzen</td>
+                            <td >Ausbildung</td>
                             <td>Bearbeiten</td>
                             <td>Löschen</td>
 
@@ -29,16 +24,16 @@
 //                        echo "<pre>";
 //                        print_r($user_competencies);
 //                        echo "</pre>";
-                        if (count($user_competencies)) :
-                            foreach ($user_competencies as $user):
+                        if (count($users)) :
+                            foreach ($users as $user):
                                 ?>
                                 <tr>
-                                    <td><?php echo anchor('admin/dashboard/edit/' . $user['id'], $user['fname'] . " " . $user['lname']); ?> </td>
-                                    <td><?php echo $user['job_title_id']; ?></td>
-                                    <td><?php echo $user['dob'] ?></td>
-                                    <td><?php echo $user['competency_name'] ?></td>
-                                    <td><?php echo btn_edit('admin/dashboard/edit/' . $user['id']) ?></td>
-                                    <td><?php echo btn_delete('admin/dashboard/delete/' . $user['id']) ?></td>
+                                    <td><?php echo anchor('admin/dashboard/edit/' . $user->id, $user->fname . " " . $user->lname); ?> </td>
+                                    <td><?php echo $user->user_title; ?></td>
+                                    <td><?php echo $user->dob ?></td>
+                                    <td><?php echo $user->ausbildung ?></td>
+                                    <td><?php echo btn_edit('admin/dashboard/edit/' . $user->id) ?></td>
+                                    <td><?php echo btn_delete('admin/dashboard/delete/' . $user->id) ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>

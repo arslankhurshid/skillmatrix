@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 16. Nov 2017 um 18:43
+-- Erstellungszeit: 17. Nov 2017 um 12:43
 -- Server-Version: 10.1.19-MariaDB
 -- PHP-Version: 5.6.28
 
@@ -93,9 +93,32 @@ CREATE TABLE `job_title_has_comp` (
 --
 
 INSERT INTO `job_title_has_comp` (`id`, `job_title_id`, `competency_id`, `skill_value`) VALUES
-(1, 1, 6, '1'),
-(2, 2, 6, '3'),
-(3, 2, 12, '1');
+(17, 1, 6, '1'),
+(18, 1, 7, '2'),
+(19, 1, 8, '0'),
+(20, 1, 9, '0'),
+(21, 1, 11, '0'),
+(22, 1, 12, '0'),
+(23, 1, 13, '0'),
+(24, 1, 14, '0'),
+(25, 1, 15, '0'),
+(26, 1, 16, '0'),
+(27, 1, 17, '0'),
+(28, 1, 19, '2'),
+(29, 1, 21, '3'),
+(30, 2, 6, '1'),
+(31, 2, 7, '1'),
+(32, 2, 8, '1'),
+(33, 2, 9, '1'),
+(34, 2, 11, '3'),
+(35, 2, 12, '3'),
+(36, 2, 13, '3'),
+(37, 2, 14, '3'),
+(38, 2, 15, '4'),
+(39, 2, 16, '3'),
+(40, 2, 17, '3'),
+(41, 2, 19, '1'),
+(42, 2, 21, '2');
 
 -- --------------------------------------------------------
 
@@ -169,13 +192,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fname`, `lname`, `dob`, `address`, `ausbildung`, `job_title_id`) VALUES
-(1, 'Employee', 'A', '25.10.1985', 'Dr. Robert Graf Strasse', 'FH', 0),
-(2, 'Emplyee', 'B', '13.17.1980', 'Mosserhofgasse 14, 8010 Graz', 'Ing', 0),
-(3, 'Employee', 'C', '13.17.2017', 'St. Peter gasse 23, 8010. Graz', 'Master in Informatik, First level tech support', 0),
-(6, 'Emplyee', 'D', '01.05.1980', 'Test', 'Test1,Test2', 0),
-(7, 'Name', 'A', '01.11.1980', 'Dr. Robert Graf Strasse 12/3/11', 'Ing', 0),
-(8, 'Name', 'E', '06.05.1970', 'Mosserhofgasse 14, 8010 Graz', 'IT', 0),
-(17, 'Test', 'Mitarbeiter23', '15.02.2017', 'Mosserhofgasse 14, 8010 Graz', 'SWe Ing', 1);
+(7, 'Name', 'B', '01.11.1980', 'Dr. Robert Graf Strasse 12/3/11', 'Diplom in IT, Cisco Networking, ONET: Installation', 2),
+(17, 'Name', 'A', '15.02.2017', 'Mosserhofgasse 14, 8010 Graz', 'Software Engineering', 1),
+(18, 'Name', 'C', '17.17.2017', 'Dr. Robert Graf Strasse 12/3/11', 'Ing', 1);
 
 -- --------------------------------------------------------
 
@@ -195,10 +214,45 @@ CREATE TABLE `user_has_comp` (
 --
 
 INSERT INTO `user_has_comp` (`id`, `user_id`, `competency_id`, `skill_value`) VALUES
-(101, 17, 6, '1'),
-(102, 17, 7, '2'),
-(104, 7, 15, '4'),
-(105, 7, 19, '1');
+(248, 7, 6, '2'),
+(249, 7, 7, '2'),
+(250, 7, 8, '2'),
+(251, 7, 9, '2'),
+(252, 7, 11, '4'),
+(253, 7, 12, '2'),
+(254, 7, 13, '3'),
+(255, 7, 14, '4'),
+(256, 7, 15, '4'),
+(257, 7, 16, '3'),
+(258, 7, 17, '4'),
+(259, 7, 19, '2'),
+(260, 7, 21, '2'),
+(300, 17, 6, '2'),
+(301, 17, 7, '1'),
+(302, 17, 8, '0'),
+(303, 17, 9, '0'),
+(304, 17, 11, '1'),
+(305, 17, 12, '0'),
+(306, 17, 13, '3'),
+(307, 17, 14, '0'),
+(308, 17, 15, '0'),
+(309, 17, 16, '3'),
+(310, 17, 17, '4'),
+(311, 17, 19, '1'),
+(312, 17, 21, '4'),
+(313, 18, 6, '4'),
+(314, 18, 7, '3'),
+(315, 18, 8, '2'),
+(316, 18, 9, '4'),
+(317, 18, 11, '1'),
+(318, 18, 12, '2'),
+(319, 18, 13, '0'),
+(320, 18, 14, '0'),
+(321, 18, 15, '0'),
+(322, 18, 16, '0'),
+(323, 18, 17, '0'),
+(324, 18, 19, '1'),
+(325, 18, 21, '1');
 
 --
 -- Indizes der exportierten Tabellen
@@ -254,7 +308,7 @@ ALTER TABLE `user_has_comp`
 -- AUTO_INCREMENT für Tabelle `competency`
 --
 ALTER TABLE `competency`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT für Tabelle `job_title`
 --
@@ -264,7 +318,7 @@ ALTER TABLE `job_title`
 -- AUTO_INCREMENT für Tabelle `job_title_has_comp`
 --
 ALTER TABLE `job_title_has_comp`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 --
 -- AUTO_INCREMENT für Tabelle `skills`
 --
@@ -279,12 +333,12 @@ ALTER TABLE `strength`
 -- AUTO_INCREMENT für Tabelle `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT für Tabelle `user_has_comp`
 --
 ALTER TABLE `user_has_comp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=326;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

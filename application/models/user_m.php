@@ -29,7 +29,7 @@ Class user_m extends My_Model {
         $this->db->where('users.id=', $id);
 
         $results = $this->db->get('users')->result_array();
-
+//        echo $this->db->last_query();
         $array = array();
         foreach ($results as $res) {
             $array[$res['competency_id']] = $res['skill_value'];
@@ -40,10 +40,11 @@ Class user_m extends My_Model {
 
     // get user competencies for Diagram
     public function getUserCompArray($id = null) {
+
         $query = $this->db->query("SELECT user_has_comp.skill_value FROM user_has_comp
 							LEFT JOIN competency 
 							on user_has_comp.competency_id = competency.id
-							WHERE user_has_comp.user_id = 17 order by competency.id ASC;
+							WHERE user_has_comp.user_id = '" . $id . "' order by competency.id ASC;
 						");
         $result = $query->result_array();
         $response = array();
@@ -53,46 +54,44 @@ Class user_m extends My_Model {
         return $response;
     }
 
-    public function get_user_competencies($id = null, $single = null) {
-        $this->db->select('users.*, t3.name as competency_name, t4.name as parent_competency_name');
-        $this->db->join('user_has_comp as t2', 't2.user_id = users.id', 'left');
-        $this->db->join('competency as t3', 't3.id = t2.competency_id', 'left');
-        $this->db->join('competency as t4', 't4.id = t3.parent_id', 'left');
+    // get all user competencies for diagram
+    public function getAllUserCompArray($id = null) {
+
+        $query = $this->db->query("SELECT user_has_comp.skill_value FROM user_has_comp
+							LEFT JOIN competency 
+							on user_has_comp.competency_id = competency.id
+							order by competency.id ASC;
+						");
+        $result = $query->result_array();
+        $response = array();
+        foreach ($result as $key => $val) {
+            $response[] = $val['skill_value'];
+        }
+        return $response;
+    }
+
+    public function getUserJobCompetencies($id = null) {
+        $query = $this->db->query("SELECT t1.id,t1.job_title_id,t3.skill_value,t3.competency_id FROM users as t1
+                                                        LEFT JOIN job_title as t2 ON t2.id = t1.job_title_id
+                                                        LEFT JOIN job_title_has_comp as t3 on t3.job_title_id = t2.id
+                                                        WHERE t1.id = '" . $id . "' order by t3.competency_id ASC;
+                                                        ");
+
+        $result = $query->result_array();
+        $response = array();
+        foreach ($result as $key => $val) {
+            $response[] = $val['skill_value'];
+        }
+        return $response;
+    }
+
+    public function get_user_view_details($id = null, $single = null) {
+        $this->db->select('users.*, t2.title as user_title');
+        $this->db->join('job_title  as t2', 't2.id = users.job_title_id', 'left');
         $this->db->order_by("id", "desc");
-        $results = $this->db->get('users')->result_array();
-//        echo $this->db->last_query();
-        $array = array();
-        $finalArray = array();
-        foreach ($results as $page) {
-            $array[$page['id']][] = $page['competency_name'];
-        }
-        foreach ($array as $key => $arr) {
-            $data[$key]['competency_name'] = implode(',', $arr);
-        }
-
-        foreach ($results as $result) {
-            $anotherArray[$result['id']] = array(
-                'id' => $result['id'],
-                'fname' => $result['fname'],
-                'lname' => $result['lname'],
-                'job_title_id' => $result['job_title_id'],
-                'dob' => $result['dob'],
-                'address' => $result['address'],
-                'ausbildung' => $result['ausbildung'],
-                'parent_competency_name' => $result['parent_competency_name'],
-            );
-        }
-        $res = array();
-        foreach ($data as $k => $v) {
-            $res[$k] = array_merge($data[$k], $anotherArray[$k]);
-        }
-//        echo "<pre>";
-//        print_r($results);
-//        echo "</pre>";
-
-        return $res;
-
-//        return parent::get($id, $single);
+        $results = parent::get();
+//        $results = $this->db->get('users')->result_array();
+        return $results;
     }
 
     public function get_newUser() {
