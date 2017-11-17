@@ -13,10 +13,11 @@ class chart extends Admin_Controller {
 
     function index() {
         $this->data['users'] = $this->user_m->get_users();
-        $this->data['userCompArray'] = $this->user_m->getUserCompArray();
-        $this->data['jobsCompArray'] = $this->job_title_m->getJobsCompArray();
+        $this->data['competency_labels'] = json_encode($this->competency_m->getLabels());
+        $this->data['userCompArray'] = json_encode($this->user_m->getUserCompArray());
+        $this->data['jobsCompArray'] = json_encode($this->job_title_m->getJobsCompArray());
         $this->data['compArray'] = $this->competency_m->getSubCompArray();
-        $commaList = '"'.implode('","', $this->data['compArray']).'"';
+        $commaList = '"' . implode('","', $this->data['compArray']) . '"';
         echo $commaList;
         $this->data['skillArray'] = $this->skills_m->skillArray();
         //Load view
@@ -29,7 +30,7 @@ class chart extends Admin_Controller {
         $userCompArray = $this->user_m->getUserCompArray();
         $jobsCompArray = $this->job_title_m->getJobsCompArray();
         $compArray = $this->competency_m->getSubCompArray();
-        $commaList = '"'.implode('","', $compArray).'"';
+        $commaList = '"' . implode('","', $compArray) . '"';
 //        $comma_separated = "'".$commaList."'";
 
         $skillArray = $this->skills_m->skillArray();
