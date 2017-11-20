@@ -38,7 +38,7 @@ Class user_m extends My_Model {
         return $array;
     }
 
-    // get user competencies for Diagram
+    // get user competencies for Diagram against user_id
     public function getUserCompArray($id = null) {
 
         $query = $this->db->query("SELECT user_has_comp.skill_value FROM user_has_comp
@@ -50,6 +50,25 @@ Class user_m extends My_Model {
         $response = array();
         foreach ($result as $key => $val) {
             $response[] = $val['skill_value'];
+        }
+        return $response;
+    }
+
+    // get all users competencies against job_title
+
+    public function listUserCompArray($id = null) {
+        // get all users competencies against job_title
+        $this->db->select('users.*, t2.skill_value');
+        $this->db->join('user_has_comp as t2', 't2.user_id = users.id', 'left');
+        $this->db->join('job_title as t3', 'users.job_title_id = t3.id', 'left');
+        if ($id != null) {
+            $this->db->where('t3.id=', $id);
+        }
+        $result = $this->db->get('users')->result_array();
+
+        $response = array();
+        foreach ($result as $key => $val) {
+            $response[$val['fname'] . ' ' . $val['lname']][] = $val['skill_value'];
         }
         return $response;
     }
@@ -109,12 +128,14 @@ Class user_m extends My_Model {
     public function get_users() {
         // Fetch all pages w/out parents
         // Return key => value pair array
-        $this->db->select('id, fname, lname');
+        $this->db->select('users.*, fname, lname,t2.title');
+        $this->db->join('job_title  as t2', 't2.id = users.job_title_id', 'left');
         $users = parent::get();
-        $array = array(0 => 'Alle');
+//        echo $this->db->last_query();
+        $array = array('0' => 'Select');
         if (count($users)) {
             foreach ($users as $user) {
-                $array[$user->id] = $user->fname . " " . $user->lname;
+                $array[$user->title][$user->id] = $user->fname . " " . $user->lname;
             }
         }
 
