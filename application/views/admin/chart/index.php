@@ -27,20 +27,33 @@
     </div>
     <br>
     <?php echo form_close(); ?>
-    <div id="competency">
-
+    <div id="chart">
+        <canvas id="lineChart" width="600" height="400"></canvas>
     </div>
 
-    <!--<canvas id="canvas" width="600" height="400"></canvas>-->
 
+    <!--
+        <div>
+            <canvas id="lineChart" width="600" height="400"></canvas>
+        </div>-->
 
-    <canvas id="lineChart" width="600" height="400"></canvas>
 
 </section>
 
 
 <script>
+    var myChart;
+    var x = document.getElementsByClassName("chartjs-hidden-iframe");
     function some_function() {
+        
+        console.info(x);
+//        if (x.style.display === "block") {
+//            x.style.display = "none";
+//        } else {
+//            x.style.display = "block";
+//        }
+//        document.getElementById("chart").innerHTML = "";
+//        document.getElementById("chart").innerHTML = "test";
         var labels = <?php echo $competency_labels; ?>;
         var drop_down = document.getElementById("user_id");
         $.ajax({
@@ -50,21 +63,30 @@
 //            data: {data: $(dataString).serializeArray()},
             cache: false,
             success: function (data) {
+//                if(myChart){myChart.destroy();}
+//phle if lagien k agr element exsist krta hait u remve ho
+//ok // ase ho sakta ha?x.lenght kr dien
+            if(x.length!= "")
+            {
+                $( ".chartjs-hidden-iframe" ).remove( );
+            }
+            $( ".chart" ).remove( );
                 console.info(data.userCompArray);
                         const CHART = document.getElementById("lineChart");
-                        var barChart = new Chart(CHART, {
+                        myChart = new Chart(CHART, {
                             type: 'radar',
                             data: {
                                 labels: data.competency_labels,
                                 datasets: [{
                                         label: "Ist",
                                         borderColor: "#00FF00",
-                                        borderWidth: 2,
+                                        borderWidth: 0.1,
                                         data: data.userCompArray,
                                     },
                                     {
                                         label: "Stellenanforderungen",
                                         borderColor: "rgba(200,0,0,0.6)",
+                                        backgroundColor: "rgba(0,0,0,0)",
                                         borderWidth: 2,
                                         data: data.jobsCompArray,
                                     }],
@@ -112,9 +134,15 @@
 //            data: {data: $(dataString).serializeArray()},
             cache: false,
             success: function (data) {
+                if(x.length!= "")
+            {
+                $( ".chartjs-hidden-iframe" ).remove( );
+            }
+            $( ".chart" ).remove( );
+//                document.getElementById("chart").innerHTML="";
                 console.info(data);
                         const CHART = document.getElementById("lineChart");
-                        var barChart = new Chart(CHART, {
+                        var myChart = new Chart(CHART, {
                             type: 'radar',
                             data: {
                                 labels: labels,
@@ -155,47 +183,50 @@
 </script>
 
 <script>
-    var labels = <?php echo $competency_labels; ?>;
-            const CHART = document.getElementById("lineChart");
-            var barChart = new Chart(CHART, {
-                type: 'radar',
-                data: {
-                    labels: labels,
-                    datasets: [
-<?php foreach ($listUser as $key => $val): ?>
-                            {
-                                label: <?php echo json_encode($key); ?>,
-                                        borderColor: "#00FF00",
-                                borderWidth: 0.1,
-                                        data: <?php echo json_encode($val); ?>,
-                            },
-<?php endforeach; ?>
-                    ],
-                },
-                options: {
-                    scale: {
-                        ticks: {
-                            suggestedMin: 0,
-                            suggestedMax: 4,
-                            stepSize: 1,
-                            callback: function (value) {
-                                if (value == 1) {
-                                    return "Basic";
-                                }
-                                if (value == 2) {
-                                    return "Intermediate";
-                                }
-                                if (value == 3) {
-                                    return "Advance";
-                                }
-                                if (value == 4) {
-                                    return "Expert";
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
+//    
+//    $(window).load(function () {/*code here*/
+//
+//    var labels = <?php // echo $competency_labels;    ?>;
+//            const CHART = document.getElementById("lineChart");
+//            var barChart = new Chart(CHART, {
+//                type: 'radar',
+//                data: {
+//                    labels: labels,
+//                    datasets: [
+//<?php // foreach ($listUser as $key => $val):    ?>
+//                            {
+//                                label: <?php // echo json_encode($key);    ?>,
+////                                        borderColor: "#00FF00",
+//                                borderWidth: 0.1,
+//                                        data: <?php // echo json_encode($val);    ?>,
+//                            },
+//<?php // endforeach;    ?>
+//                    ],
+//                },
+//                options: {
+//                    scale: {
+//                        ticks: {
+//                            suggestedMin: 0,
+//                            suggestedMax: 4,
+//                            stepSize: 1,
+//                            callback: function (value) {
+//                                if (value == 1) {
+//                                    return "Basic";
+//                                }
+//                                if (value == 2) {
+//                                    return "Intermediate";
+//                                }
+//                                if (value == 3) {
+//                                    return "Advance";
+//                                }
+//                                if (value == 4) {
+//                                    return "Expert";
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            });
+//    });
 </script>
 

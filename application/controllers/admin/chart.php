@@ -50,6 +50,7 @@ class chart extends Admin_Controller {
         $secondaryDatset[] = array(
             'label' => "Soll",
             'borderColor' => "rgba(200,0,0,0.6)",
+            'backgroundColor'=> "rgba(0,0,0,0)",
             'borderWidth' => 2,
             'data' => $this->data['jobsCompArray']
         );
