@@ -1,8 +1,20 @@
-<?php
+<?php $this->load->view('admin/components/page_head'); ?>
+<body style="background: #555;">
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+<div class="container">
+  <div class="modal show" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+          <?php $this->load->view($subview); // subview is set in Controller?>
+        <div class="modal-footer">
+            
+        &copy<?php echo $meta_title; ?>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
 
+</body>

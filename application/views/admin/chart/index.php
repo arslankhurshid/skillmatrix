@@ -45,15 +45,6 @@
     var myChart;
     var x = document.getElementsByClassName("chartjs-hidden-iframe");
     function some_function() {
-        
-        console.info(x);
-//        if (x.style.display === "block") {
-//            x.style.display = "none";
-//        } else {
-//            x.style.display = "block";
-//        }
-//        document.getElementById("chart").innerHTML = "";
-//        document.getElementById("chart").innerHTML = "test";
         var labels = <?php echo $competency_labels; ?>;
         var drop_down = document.getElementById("user_id");
         $.ajax({
@@ -63,16 +54,12 @@
 //            data: {data: $(dataString).serializeArray()},
             cache: false,
             success: function (data) {
-//                if(myChart){myChart.destroy();}
-//phle if lagien k agr element exsist krta hait u remve ho
-//ok // ase ho sakta ha?x.lenght kr dien
-            if(x.length!= "")
-            {
-                $( ".chartjs-hidden-iframe" ).remove( );
-            }
-            $( ".chart" ).remove( );
-                console.info(data.userCompArray);
-                        const CHART = document.getElementById("lineChart");
+
+                if (x.length != "")
+                {
+                myChart.destroy();
+                }
+                const CHART = document.getElementById("lineChart");
                         myChart = new Chart(CHART, {
                             type: 'radar',
                             data: {
@@ -115,6 +102,7 @@
                                 }
                             }
                         });
+
             },
             error: function (e) {
                 console.info(e);
@@ -125,8 +113,6 @@
     function title_function() {
         var labels = <?php echo $competency_labels; ?>;
         var drop_down = document.getElementById("title_id");
-        var z;
-        // 
         $.ajax({
             type: "POST",
             dataType: "json",
@@ -134,15 +120,12 @@
 //            data: {data: $(dataString).serializeArray()},
             cache: false,
             success: function (data) {
-                if(x.length!= "")
-            {
-                $( ".chartjs-hidden-iframe" ).remove( );
-            }
-            $( ".chart" ).remove( );
-//                document.getElementById("chart").innerHTML="";
-                console.info(data);
-                        const CHART = document.getElementById("lineChart");
-                        var myChart = new Chart(CHART, {
+                if (x.length != "")
+                {
+                    myChart.destroy();
+                }
+                const CHART = document.getElementById("lineChart");
+                        myChart = new Chart(CHART, {
                             type: 'radar',
                             data: {
                                 labels: labels,
@@ -186,21 +169,21 @@
 //    
 //    $(window).load(function () {/*code here*/
 //
-//    var labels = <?php // echo $competency_labels;    ?>;
+//    var labels = <?php // echo $competency_labels;           ?>;
 //            const CHART = document.getElementById("lineChart");
 //            var barChart = new Chart(CHART, {
 //                type: 'radar',
 //                data: {
 //                    labels: labels,
 //                    datasets: [
-//<?php // foreach ($listUser as $key => $val):    ?>
+//<?php // foreach ($listUser as $key => $val):           ?>
 //                            {
-//                                label: <?php // echo json_encode($key);    ?>,
+//                                label: <?php // echo json_encode($key);           ?>,
 ////                                        borderColor: "#00FF00",
 //                                borderWidth: 0.1,
-//                                        data: <?php // echo json_encode($val);    ?>,
+//                                        data: <?php // echo json_encode($val);           ?>,
 //                            },
-//<?php // endforeach;    ?>
+//<?php // endforeach;           ?>
 //                    ],
 //                },
 //                options: {

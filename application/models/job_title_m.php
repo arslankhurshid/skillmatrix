@@ -35,7 +35,7 @@ Class job_title_m extends My_Model {
     }
 
     public function getJobsCompArray($id) {
-        $query = $this->db->query("SELECT * FROM job_title_has_comp WHERE job_title_has_comp.job_title_id = '".$id."' order by job_title_has_comp.competency_id ASC;");
+        $query = $this->db->query("SELECT * FROM job_title_has_comp WHERE job_title_has_comp.job_title_id = '" . $id . "' order by job_title_has_comp.competency_id ASC;");
 
         $result = $query->result_array();
         $response = array();

@@ -16,6 +16,17 @@ Class user_m extends My_Model {
             'rules' => 'trim|required|xss_clean'
         ),
     );
+    public $rules = array(
+        'email' => array(
+            'field' => 'user_name',
+            'label' => 'User Name',
+            'rules' => 'trim|required|xss_clean'
+        ),
+        'password' => array(
+            'field' => 'password',
+            'label' => 'Password',
+            'rules' => 'trim|required'),
+    );
 
     public function __construct() {
         parent::__construct();
@@ -61,11 +72,11 @@ Class user_m extends My_Model {
         $this->db->select('users.*, t2.skill_value');
         $this->db->join('user_has_comp as t2', 't2.user_id = users.id', 'left');
         $this->db->join('job_title as t3', 'users.job_title_id = t3.id', 'left');
-        if ($id != null) {
+        if ($id != 0) {
             $this->db->where('t3.id=', $id);
         }
         $result = $this->db->get('users')->result_array();
-
+//        echo $this->db->last_query();
         $response = array();
         foreach ($result as $key => $val) {
             $response[$val['fname'] . ' ' . $val['lname']][] = $val['skill_value'];
@@ -140,6 +151,37 @@ Class user_m extends My_Model {
         }
 
         return $array;
+    }
+
+    public function login() {
+        $user = $this->get_by(array(
+            'user_name' => $this->input->post('user_name'),
+            'user_hash' => $this->hash($this->input->post('password'))
+                ), TRUE);
+        if (count($user)) {
+            $data = array(
+                'name' => $user->fname,
+                'user_name' => $user->user_name,
+                'id' => $user->id,
+                'loggedin' => TRUE,
+            );
+            $this->session->set_userdata($data);
+            return TRUE;
+        }
+    }
+
+    public function logout() {
+        $this->session->sess_destroy();
+    }
+
+    public function loggedin() {
+//        echo "<pre>" . print_r($_SESSION);
+//        echo "</pre>";
+        return (bool) $this->session->userdata('loggedin');
+    }
+
+    public function hash($string) {
+        return hash('sha512', $string . config_item('encryption_key'));
     }
 
 }

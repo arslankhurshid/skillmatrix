@@ -16,9 +16,9 @@ class chart extends Admin_Controller {
         $this->data['users'] = $this->user_m->get_users();
         $this->data['titles'] = $this->job_title_m->get_job_titles();
         $this->data['competency_labels'] = json_encode($this->competency_m->getLabels());
-        $this->data['userCompArray'] = json_encode($this->user_m->getAllUserCompArray());
-        $this->data['jobsCompArray'] = json_encode($this->job_title_m->getJobsCompArray($id));
-        $this->data['listUser'] = $this->user_m->listUserCompArray($id);
+//        $this->data['userCompArray'] = json_encode($this->user_m->getAllUserCompArray());
+//        $this->data['jobsCompArray'] = json_encode($this->job_title_m->getJobsCompArray($id));
+//        $this->data['listUser'] = $this->user_m->listUserCompArray($id);
 
         //Load view
         $this->data['subview'] = 'admin/chart/index';
@@ -38,26 +38,39 @@ class chart extends Admin_Controller {
         $this->data['listUser'] = $this->user_m->listUserCompArray($id);
         $this->data['jobsCompArray'] = $this->job_title_m->getJobsCompArray($id);
 
-        foreach ($this->data['listUser'] as $key => $val) {
-            $datasets[] = [
-                'label' => $key,
-                'borderColor' => "#00FF00",
-                'borderWidth' => 0.1,
-                'data' => $val,
-            ];
+        if (isset($this->data['listUser']) && !empty($this->data['listUser'])) {
+            foreach ($this->data['listUser'] as $key => $val) {
+                $datasets[] = [
+                    'label' => $key,
+                    'borderColor' => "#00FF00",
+                    'borderWidth' => 0.1,
+                    'data' => $val,
+                ];
+            }
+
+            $secondaryDatset[] = array(
+                'label' => "Stellenanforderungen",
+                'borderColor' => "rgba(200,0,0,0.6)",
+                'backgroundColor' => "rgba(0,0,0,0)",
+                'borderWidth' => 2,
+                'data' => $this->data['jobsCompArray']
+            );
+
+
+            $finaldatasets = array_merge($secondaryDatset, $datasets);
+        } else {
+            $finaldatasets[] = array(
+                'label' => "Stellenanforderungen",
+                'borderColor' => "rgba(200,0,0,0.6)",
+                'backgroundColor' => "rgba(0,0,0,0)",
+                'borderWidth' => 2,
+                'data' => $this->data['jobsCompArray']
+            );
         }
 
-        $secondaryDatset[] = array(
-            'label' => "Soll",
-            'borderColor' => "rgba(200,0,0,0.6)",
-            'backgroundColor'=> "rgba(0,0,0,0)",
-            'borderWidth' => 2,
-            'data' => $this->data['jobsCompArray']
-        );
 
-        $datasets = array_merge($secondaryDatset, $datasets);
 
-        echo json_encode($datasets);
+        echo json_encode($finaldatasets);
     }
 
 }
