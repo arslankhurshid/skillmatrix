@@ -8,7 +8,7 @@
                     <img id="" src="<?php echo site_url('public_html/images/company_logo.png') ?>" style="border: 0; float: left; margin-right: 155px; width: 100px" /> </a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="<?php echo base_url('/admin/dashboard'); ?>">Mitarbeiter</a></li>
+                <li><a href="<?php echo base_url('/admin/dashboard'); ?>">Mitarbeiter</a></li>
                 <li><?php echo anchor('admin/competency', 'Kompetenz'); ?></li>
                 <li><?php echo anchor('admin/competency/order', 'Kompetenzen sortieren'); ?></li>
                 <li><?php echo anchor('admin/jobtitle', 'Stellenbezeichnung'); ?></li>
