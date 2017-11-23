@@ -1,73 +1,80 @@
-<div class="modal-header">
-    <h3>Log in</h3>
-    <p>Please log in using your credentials</p>
-    <div class="modal-body">
-        <?php
-//        echo "<pre>";
-//        echo print_r($this->session->userdata, TRUE);
-//        print_r($this->session);
-//        echo "</pre>";
-//        echo "</pre>";
-//        echo "Session ID:" . session_id() . "<br>";
-//        echo "Remote Address: " . $_SERVER['REMOTE_ADDR'] . "<br>";
-//        echo "User Agent: " . $this->input->user_agent() . "<br>";
-        ?>
-        <?php if (!empty(validation_errors())): ?>
-            <div class="alert alert-danger" id="errordiv">
-                <?php echo validation_errors() ?>
+<style>
+
+    body { 
+        background: url(../../public_html/images/l2.jpg) no-repeat left top fixed; 
+        
+        background-color: white;
+/*        -webkit-background-size: cover;
+        -moz-background-size: covCer;
+        -o-background-size: cover;
+        background-size: cover;*/
+    }
+
+    .panel-default {
+        opacity: 0.9;
+        margin-top:50px;
+    }
+    .form-group.last { margin-bottom:0px; }
+
+</style>
+<div class="panel-body">
+    <?php if (!empty(validation_errors())): ?>
+        <div class="alert alert-danger" id="errordiv">
+            <?php
+            echo validation_errors();
+            ?>
+        </div>
+    <?php endif; ?>
+    <?php if ($this->session->flashdata('errors')): ?>
+        <div class="alert alert-danger" id="errordiv">
+
+            <?php
+            if ($this->session->flashdata('errors')) {
+                echo $this->session->flashdata('errors');
+            }
+            ?>
+        </div>
+
+    <?php endif; ?>
+    <?php echo form_open(); ?>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-3 control-label">
+            Benutzername</label>
+        <div class="col-sm-9">
+            <input type="text" name="user_name" class="form-control" id="inputEmail3" placeholder="Benutzername" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputPassword3" class="col-sm-3 control-label">
+            Passwort:</label>
+        <div class="col-sm-9">
+            <input type="password" name="user_hash" class="form-control" id="inputPassword3" placeholder="Passwort" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"/>
+                    Remember me
+                </label>
             </div>
-        <?php endif; ?>
-        <?php
+        </div>
+    </div>
+
+    <div class="form-group last">
+        <div class="col-sm-offset-3 col-sm-9">
+            <button type="submit" class="btn btn-success btn-sm">
+                Sign in</button>
+            <button type="reset" class="btn btn-default btn-sm">
+                Reset</button>
+        </div>
+    </div>
+    <?php echo form_close(); ?>
+    <?php
+    if ($this->session->flashdata('success')) {
         echo $this->session->flashdata('success');
-        if ($this->session->flashdata('errors')) {
-            echo $this->session->flashdata('errors');
-        }
-        ?>
-        <?php echo form_open(); ?>
-        <table class="table">
-            <tr>
-                <td>User Name:</td>
-                <td><?php echo form_input('user_name'); ?></td>
-            </tr>
-            <tr>
-                <td>Password:</td> 
-                <td><?php echo form_password('password'); ?></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type="submit" name="login" value="login" class="btn btn-primary" onclick="show()">
-                </td>
-            <!--<input type = "button" value = "Show image for 5 seconds" onclick = "show()"><br><br>-->
-
-
-            </tr>
-
-        </table>
-
-        <?php echo form_close(); ?>
-        <?php
-        if ($this->session->flashdata('success')) {
-            echo $this->session->flashdata('success');
-        }
-        ?>
-    </div>
-    <div id="myDiv">
-        <img id="myImage" src="<?php echo site_url(); ?>/public_html/images/2.gif">
-    </div>
+    }
+    ?>
 </div>
 
-
-<script type = "text/javascript">
-    function hide() {
-        document.getElementById("myDiv").style.display = "none";
-    }
-    hide();
-//    setTimeout(show, 3000);
-    function show() {
-        $("#myDiv").show().delay(3000).fadeOut();
-//        setTimeout(function () {
-//            document.getElementById("myDiv").style.display = "none";
-//        }, 50000);
-    }
-
-</script>

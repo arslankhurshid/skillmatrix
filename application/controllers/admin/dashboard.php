@@ -21,7 +21,7 @@ class dashboard extends Admin_Controller {
     }
 
     function modal() {
-        $this->load->view('admin/_layout_model.php', $this->data['subview']);
+        $this->load->view('admin/_layout_modal.php', $this->data['subview']);
     }
 
     public function edit($id = NULL) {

@@ -10,6 +10,14 @@ class Migration_create_users extends CI_Migration {
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
+            'user_name' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '120',
+            ),
+            'user_hash' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '250',
+            ),
             'fname' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '120',
@@ -29,6 +37,12 @@ class Migration_create_users extends CI_Migration {
             'ausbildung' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '120',
+            ),
+            'job_title_id' => array(
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned' => TRUE,
+                'default' => 0,
             ),
         ));
         $this->dbforge->add_key('id', TRUE);

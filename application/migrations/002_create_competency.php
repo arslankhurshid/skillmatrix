@@ -17,6 +17,8 @@ class Migration_create_competency extends CI_Migration {
             'order' => array(
                 'type' => 'int',
                 'constraint' => 11,
+                'unsigned' => TRUE,
+                'default' => 0,
             ),
             'parent_id' => array(
                 'type' => 'INT',

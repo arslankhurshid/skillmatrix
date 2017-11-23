@@ -20,13 +20,12 @@ class login extends Admin_Controller {
         $this->form_validation->set_rules($rules);
         // process form
         if ($this->form_validation->run() == TRUE) {
-
 //            $this->user_m->login();
             if ($this->user_m->login() == TRUE) {
-                $this->session->set_flashdata('success', "login successfully");
+                $this->session->set_flashdata('success', "login successfully..!!");
                 redirect('admin/dashboard');
             } else {
-                $this->session->set_flashdata('errors', "Wrong User Name or Password");
+                $this->session->set_flashdata('errors', "Sie müssen einen gültigen Usernamen und ein gültiges Passwort angeben.");
                 redirect('admin/login/login');
             }
         }

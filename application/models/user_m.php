@@ -17,13 +17,13 @@ Class user_m extends My_Model {
         ),
     );
     public $rules = array(
-        'email' => array(
+        'user_name' => array(
             'field' => 'user_name',
             'label' => 'User Name',
             'rules' => 'trim|required|xss_clean'
         ),
-        'password' => array(
-            'field' => 'password',
+        'user_hash' => array(
+            'field' => 'user_hash',
             'label' => 'Password',
             'rules' => 'trim|required'),
     );
@@ -156,7 +156,7 @@ Class user_m extends My_Model {
     public function login() {
         $user = $this->get_by(array(
             'user_name' => $this->input->post('user_name'),
-            'user_hash' => $this->hash($this->input->post('password'))
+            'user_hash' => $this->hash($this->input->post('user_hash'))
                 ), TRUE);
         if (count($user)) {
             $data = array(

@@ -19,8 +19,8 @@ class Migration_create_job_title_has_comp extends CI_Migration {
                 'constraint' => 11,
             ),
             'skill_value' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '120',
+                'type' => 'int',
+                'constraint' => 11,
             ),
         ));
         $this->dbforge->add_key('id', TRUE);
