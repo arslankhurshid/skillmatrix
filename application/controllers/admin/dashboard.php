@@ -10,11 +10,26 @@ class dashboard extends Admin_Controller {
         $this->load->model('user_has_comp_m');
         $this->load->model('job_title_m');
         $this->load->model('skills_m');
+        
     }
 
     function index() {
-//        $this->data['users'] = $this->user_m->get();
-        $this->data['users'] = $this->user_m->get_user_view_details();
+
+        $total_records = $this->user_m->get_total();
+        $limit = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+        $perpage = 4;
+        if ($total_records > 0) {
+            $this->data['users'] = $this->user_m->get_user_view_details($perpage, $limit);
+            $config['base_url'] = base_url() . 'admin/dashboard/index';
+            $config['total_rows'] = $total_records;
+            $config['per_page'] = $perpage;
+            $config['uri_segment'] = 4;
+
+            $this->pagination->initialize($config);
+            $this->data['links'] = $this->pagination->create_links();
+        } else {
+            $this->data['links'] = '';
+        }
         //Load view
         $this->data['subview'] = 'admin/user/index';
         $this->load->view('admin/_layout_main.php', $this->data);

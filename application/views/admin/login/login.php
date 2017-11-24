@@ -1,7 +1,7 @@
 <style>
 
     body { 
-        background: url(../../public_html/images/l2.jpg) no-repeat left top fixed; 
+        background: url(../../public_html/images/company_logo.png) no-repeat left top fixed; 
         
         background-color: white;
 /*        -webkit-background-size: cover;

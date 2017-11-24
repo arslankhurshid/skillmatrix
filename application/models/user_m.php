@@ -115,10 +115,11 @@ Class user_m extends My_Model {
         return $response;
     }
 
-    public function get_user_view_details($id = null, $single = null) {
+    public function get_user_view_details($perpage = null, $limit = null) {
         $this->db->select('users.*, t2.title as user_title');
         $this->db->join('job_title  as t2', 't2.id = users.job_title_id', 'left');
         $this->db->order_by("id", "desc");
+        $this->db->limit($perpage, $limit);
         $results = parent::get();
 //        $results = $this->db->get('users')->result_array();
         return $results;

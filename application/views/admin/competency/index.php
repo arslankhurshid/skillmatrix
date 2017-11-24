@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php 
+            <?php
 //            echo "<pre>";
 //            print_r($competencies);
 //            echo "</pre>";
@@ -41,7 +41,13 @@
 
             <?php endif; ?>
 
+
     </table>
+    <?php
+    if (isset($links)) {
+        echo $links;
+    }
+    ?>
 </section>
 
 <!--</div></div>-->

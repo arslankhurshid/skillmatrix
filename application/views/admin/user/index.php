@@ -42,8 +42,14 @@
                             </tr>
 
                         <?php endif; ?>
+                        
 
                 </table>
+                <?php
+                        if (isset($links)) {
+                            echo $links;
+                        }
+                        ?>
             </div>
         </div>
     </div>

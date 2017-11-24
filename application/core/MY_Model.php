@@ -101,4 +101,8 @@ Class My_Model extends CI_Model {
         $this->db->delete($this->_table_name);
     }
 
+    public function get_total() {
+        return $this->db->count_all($this->_table_name);
+    }
+
 }

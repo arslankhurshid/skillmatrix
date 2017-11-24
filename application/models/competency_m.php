@@ -75,13 +75,14 @@ Class competency_m extends My_Model {
         }
     }
 
-    public function get_with_parent($id = null, $single = null) {
+    public function get_with_parent($perpage, $limit) {
         $this->db->select('competency.*, p.name as parent_name');
         $this->db->join('competency as p', 'competency.parent_id = p.id', 'left');
+        $this->db->limit($perpage, $limit);
 //        $test = parent::get($id, $single);
 //        echo $this->db->last_query();
 
-        return parent::get($id, $single);
+        return parent::get();
     }
 
     public function getSubCompArray() {

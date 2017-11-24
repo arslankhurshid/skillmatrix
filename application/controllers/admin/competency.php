@@ -9,7 +9,23 @@ class competency extends Admin_Controller {
     }
 
     function index() {
-        $this->data['competencies'] = $this->competency_m->get_with_parent();
+
+        $total_records = $this->competency_m->get_total();
+        $limit = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+        $perpage = 8;
+        if ($total_records > 0) {
+            $this->data['competencies'] = $this->competency_m->get_with_parent($perpage, $limit);
+            $config['base_url'] = base_url() . 'admin/competency/index';
+            $config['total_rows'] = $total_records;
+            $config['per_page'] = $perpage;
+            $config['uri_segment'] = 4;
+
+            $this->pagination->initialize($config);
+            $this->data['links'] = $this->pagination->create_links();
+        } else {
+            $this->data['links'] = '';
+        }
+
         //Load view
         $this->data['subview'] = 'admin/competency/index';
         $this->load->view('admin/_layout_main.php', $this->data);
