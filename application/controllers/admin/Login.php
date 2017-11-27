@@ -23,10 +23,10 @@ Class Login extends Admin_Controller {
 //            $this->User_m->login();
             if ($this->User_m->login() == TRUE) {
                 $this->session->set_flashdata('success', "login successfully..!!");
-                redirect('admin/dashboard');
+                redirect(site_url('admin/dashboard'));
             } else {
                 $this->session->set_flashdata('errors', "Sie müssen einen gültigen Usernamen und ein gültiges Passwort angeben.");
-                redirect('admin/login/login');
+                redirect(site_url('admin/login/login'));
             }
         }
         //load view
@@ -36,7 +36,7 @@ Class Login extends Admin_Controller {
 
     public function logout() {
         $this->User_m->logout();
-        redirect('admin/login/login');
+        redirect(site_url('admin/login/login'));
     }
 
 }

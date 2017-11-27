@@ -63,7 +63,7 @@ Class Jobtitle extends Admin_Controller {
                     }
                 }
             }
-            redirect('admin/jobtitle');
+            redirect(site_url('admin/jobtitle'));
         }
         $this->data['subview'] = 'admin/job_title/edit';
         $this->load->view('admin/_layout_main', $this->data);
@@ -76,7 +76,7 @@ Class Jobtitle extends Admin_Controller {
     public function delete($id) {
         $this->Job_title_m->delete($id);
         $this->deleteJobComp($id);
-        redirect('admin/job_title');
+        redirect(site_url('admin/job_title'));
     }
 
     public function order_competency($id = null) {

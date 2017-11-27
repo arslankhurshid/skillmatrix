@@ -88,7 +88,7 @@ Class Dashboard extends Admin_Controller {
                     }
                 }
             }
-            redirect('admin/dashboard');
+            redirect(site_url('admin/dashboard'));
         }
         $this->data['subview'] = 'admin/user/edit';
         $this->data['job_title'] = $this->Job_title_m->get_job_titles();
@@ -103,7 +103,7 @@ Class Dashboard extends Admin_Controller {
 
         $this->User_m->delete($id);
         $this->deleteUserComp($id);
-        redirect('admin/dashboard');
+        redirect(site_url('admin/dashboard'));
     }
 
     public function order_competency($id = null) {

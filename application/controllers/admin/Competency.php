@@ -51,7 +51,7 @@ Class Competency extends Admin_Controller {
         if ($this->form_validation->run() == TRUE) {
             $data = $this->Competency_m->array_from_post(array('name', 'parent_id'));
             $this->Competency_m->save($data, $id);
-            redirect('admin/competency');
+            redirect(site_url('admin/competency'));
         }
         $this->data['subview'] = 'admin/competency/edit';
         $this->load->view('admin/_layout_main', $this->data);
@@ -60,7 +60,7 @@ Class Competency extends Admin_Controller {
     public function delete($id) {
 
         $this->Competency_m->delete($id);
-        redirect('admin/competency');
+        redirect(site_url('admin/competency'));
     }
 
     public function order() {
