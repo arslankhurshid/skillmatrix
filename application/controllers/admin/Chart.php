@@ -1,24 +1,24 @@
 <?php
 
-class chart extends Admin_Controller {
+Class Chart extends Admin_Controller {
 
     function __construct() {
         parent::__construct();
         $this->load->helper('url');
-        $this->load->model('user_m');
-        $this->load->model('job_title_m');
-        $this->load->model('competency_m');
-        $this->load->model('skills_m');
+        $this->load->model('User_m');
+        $this->load->model('Job_title_m');
+        $this->load->model('Competency_m');
+        $this->load->model('Skills_m');
     }
 
     function index($id = null) {
 
-        $this->data['users'] = $this->user_m->get_users();
-        $this->data['titles'] = $this->job_title_m->get_job_titles();
-        $this->data['competency_labels'] = json_encode($this->competency_m->getLabels());
-//        $this->data['userCompArray'] = json_encode($this->user_m->getAllUserCompArray());
-//        $this->data['jobsCompArray'] = json_encode($this->job_title_m->getJobsCompArray($id));
-//        $this->data['listUser'] = $this->user_m->listUserCompArray($id);
+        $this->data['users'] = $this->User_m->get_users();
+        $this->data['titles'] = $this->Job_title_m->get_job_titles();
+        $this->data['competency_labels'] = json_encode($this->Competency_m->getLabels());
+//        $this->data['userCompArray'] = json_encode($this->User_m->getAllUserCompArray());
+//        $this->data['jobsCompArray'] = json_encode($this->Job_title_m->getJobsCompArray($id));
+//        $this->data['listUser'] = $this->User_m->listUserCompArray($id);
 
         //Load view
         $this->data['subview'] = 'admin/chart/index';
@@ -27,16 +27,16 @@ class chart extends Admin_Controller {
 
     function getCompetency($id = null) {
 
-        $this->data['competency_labels'] = $this->competency_m->getLabels();
-        $this->data['userCompArray'] = $this->user_m->getUserCompArray($id);
-        $this->data['jobsCompArray'] = $this->user_m->getUserJobCompetencies($id);
+        $this->data['competency_labels'] = $this->Competency_m->getLabels();
+        $this->data['userCompArray'] = $this->User_m->getUserCompArray($id);
+        $this->data['jobsCompArray'] = $this->User_m->getUserJobCompetencies($id);
         echo json_encode($this->data);
     }
 
     function viewUsersChart($id = null) {
-        $this->data['competency_labels'] = $this->competency_m->getLabels();
-        $this->data['listUser'] = $this->user_m->listUserCompArray($id);
-        $this->data['jobsCompArray'] = $this->job_title_m->getJobsCompArray($id);
+        $this->data['competency_labels'] = $this->Competency_m->getLabels();
+        $this->data['listUser'] = $this->User_m->listUserCompArray($id);
+        $this->data['jobsCompArray'] = $this->Job_title_m->getJobsCompArray($id);
 
         if (isset($this->data['listUser']) && !empty($this->data['listUser'])) {
             foreach ($this->data['listUser'] as $key => $val) {

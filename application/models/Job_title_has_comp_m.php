@@ -1,6 +1,6 @@
 <?php
 
-Class job_title_has_comp_m extends My_Model {
+Class Job_title_has_comp_m extends My_Model {
 
     protected $_table_name = 'job_title_has_comp';
     protected $_order_by = '';

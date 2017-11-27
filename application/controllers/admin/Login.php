@@ -1,6 +1,6 @@
 <?php
 
-class login extends Admin_Controller {
+Class Login extends Admin_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -14,14 +14,14 @@ class login extends Admin_Controller {
     public function login() {
         // Redirect the user if already login 
         $dashboard = 'admin/login/login';
-        $this->user_m->loggedin() == FALSE || redirect($dashboard);
+        $this->User_m->loggedin() == FALSE || redirect($dashboard);
         //set form
-        $rules = $this->user_m->rules;
+        $rules = $this->User_m->rules;
         $this->form_validation->set_rules($rules);
         // process form
         if ($this->form_validation->run() == TRUE) {
-//            $this->user_m->login();
-            if ($this->user_m->login() == TRUE) {
+//            $this->User_m->login();
+            if ($this->User_m->login() == TRUE) {
                 $this->session->set_flashdata('success', "login successfully..!!");
                 redirect('admin/dashboard');
             } else {
@@ -35,7 +35,7 @@ class login extends Admin_Controller {
     }
 
     public function logout() {
-        $this->user_m->logout();
+        $this->User_m->logout();
         redirect('admin/login/login');
     }
 

@@ -1,20 +1,20 @@
 <?php
 
-class competency extends Admin_Controller {
+Class Competency extends Admin_Controller {
 
     function __construct() {
         parent::__construct();
         $this->load->helper('url');
-        $this->load->model('competency_m');
+        $this->load->model('Competency_m');
     }
 
     function index() {
 
-        $total_records = $this->competency_m->get_total();
+        $total_records = $this->Competency_m->get_total();
         $limit = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
         $perpage = 8;
         if ($total_records > 0) {
-            $this->data['competencies'] = $this->competency_m->get_with_parent($perpage, $limit);
+            $this->data['competencies'] = $this->Competency_m->get_with_parent($perpage, $limit);
             $config['base_url'] = base_url() . 'admin/competency/index';
             $config['total_rows'] = $total_records;
             $config['per_page'] = $perpage;
@@ -37,20 +37,20 @@ class competency extends Admin_Controller {
 
     public function edit($id = NULL) {
         if ($id) {
-            $this->data['competency'] = $this->competency_m->get($id);
+            $this->data['competency'] = $this->Competency_m->get($id);
             if (empty(count($this->data['competency'])))
                 $this->data['errors'][] = "Competency could not be found";
         }
         else {
-            $this->data['competency'] = $this->competency_m->get_new();
+            $this->data['competency'] = $this->Competency_m->get_new();
         }
         // competency for drop down menu
-        $this->data['competency_without_parents'] = $this->competency_m->get_no_parents($id);
-        $rules = $this->competency_m->rules;
+        $this->data['competency_without_parents'] = $this->Competency_m->get_no_parents($id);
+        $rules = $this->Competency_m->rules;
         $this->form_validation->set_rules($rules);
         if ($this->form_validation->run() == TRUE) {
-            $data = $this->competency_m->array_from_post(array('name', 'parent_id'));
-            $this->competency_m->save($data, $id);
+            $data = $this->Competency_m->array_from_post(array('name', 'parent_id'));
+            $this->Competency_m->save($data, $id);
             redirect('admin/competency');
         }
         $this->data['subview'] = 'admin/competency/edit';
@@ -59,7 +59,7 @@ class competency extends Admin_Controller {
 
     public function delete($id) {
 
-        $this->competency_m->delete($id);
+        $this->Competency_m->delete($id);
         redirect('admin/competency');
     }
 
@@ -72,10 +72,10 @@ class competency extends Admin_Controller {
     public function order_ajax() {
         // save order from ajax call
         if (isset($_POST['sortable'])) {
-            $this->competency_m->save_order($_POST['sortable']);
+            $this->Competency_m->save_order($_POST['sortable']);
         }
 
-        $this->data['competencies'] = $this->competency_m->get_nested();
+        $this->data['competencies'] = $this->Competency_m->get_nested();
         $this->load->view('admin/competency/order_ajax', $this->data);
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-Class user_has_comp_m extends My_Model {
+Class User_has_comp_m extends My_Model {
 
     protected $_table_name = 'user_has_comp';
     protected $_order_by = '';

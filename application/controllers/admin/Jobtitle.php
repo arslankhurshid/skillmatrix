@@ -1,19 +1,18 @@
 <?php
 
-class jobtitle extends Admin_Controller {
+Class Jobtitle extends Admin_Controller {
 
     function __construct() {
         parent::__construct();
         $this->load->helper('url');
-        $this->load->model('job_title_m');
-        $this->load->model('competency_m');
-        $this->load->model('job_title_has_comp_m');
-        $this->load->model('job_title_m');
-        $this->load->model('skills_m');
+        $this->load->model('Job_title_m');
+        $this->load->model('Competency_m');
+        $this->load->model('Job_title_has_comp_m');
+        $this->load->model('Skills_m');
     }
 
     function index() {
-        $this->data['job_title_competencies'] = $this->job_title_m->get_job_title_competencies();
+        $this->data['job_title_competencies'] = $this->Job_title_m->get_job_title_competencies();
 
         //Load view
         $this->data['subview'] = 'admin/job_title/index';
@@ -22,17 +21,17 @@ class jobtitle extends Admin_Controller {
 
     public function edit($id = NULL) {
         if ($id) {
-            $this->data['job_title'] = $this->job_title_m->get($id);
+            $this->data['job_title'] = $this->Job_title_m->get($id);
 
 
             if (empty(count($this->data['job_title'])))
                 $this->data['errors'][] = "Title could not be found";
         }
         else {
-            $this->data['job_title'] = $this->job_title_m->get_newTitle();
+            $this->data['job_title'] = $this->Job_title_m->get_newTitle();
         }
 
-        $rules = $this->job_title_m->rules;
+        $rules = $this->Job_title_m->rules;
 
         $this->form_validation->set_rules($rules);
         if ($this->form_validation->run() == TRUE) {
@@ -40,11 +39,11 @@ class jobtitle extends Admin_Controller {
             print_r($_POST);
             echo "</pre>";
 //            exit();
-            $data = $this->job_title_m->array_from_post(array(
+            $data = $this->Job_title_m->array_from_post(array(
                 'title',
             ));
 
-            $lastInsertedID = $this->job_title_m->save($data, $id);
+            $lastInsertedID = $this->Job_title_m->save($data, $id);
             if (isset($_POST) && !empty($_POST['competencies'])) {
                 $competencies = $_POST['competencies'];
                 if (!empty($competencies)) {
@@ -54,7 +53,7 @@ class jobtitle extends Admin_Controller {
                         if (isset($_POST['competency-' . $v]) && $_POST['competency-' . $v]) {
                             if (empty($lastInsertedID))
                                 $lastInsertedID = $id;
-                            $this->job_title_has_comp_m->save(array(
+                            $this->Job_title_has_comp_m->save(array(
                                 'job_title_id' => $lastInsertedID,
                                 'competency_id' => $v,
                                 'skill_value' => $_POST['competency-' . $v][0],
@@ -71,20 +70,20 @@ class jobtitle extends Admin_Controller {
     }
 
     public function deleteJobComp($id) {
-        $this->job_title_has_comp_m->deleteJobComp($id);
+        $this->Job_title_has_comp_m->deleteJobComp($id);
     }
 
     public function delete($id) {
-        $this->job_title_m->delete($id);
+        $this->Job_title_m->delete($id);
         $this->deleteJobComp($id);
         redirect('admin/job_title');
     }
 
     public function order_competency($id = null) {
 
-        $this->data['skills'] = $this->skills_m->skillArray();
-        $this->data['selectedArray'] = $this->job_title_m->getJobTitleCompetencies($id);
-        $this->data['compArray'] = $this->competency_m->getParentChild();
+        $this->data['skills'] = $this->Skills_m->skillArray();
+        $this->data['selectedArray'] = $this->Job_title_m->getJobTitleCompetencies($id);
+        $this->data['compArray'] = $this->Competency_m->getParentChild();
         $this->load->view('admin/user/order_competency', $this->data);
     }
 
@@ -93,7 +92,7 @@ class jobtitle extends Admin_Controller {
         if ($id == 0) {
             $this->data['sub_competencies'] = array();
         } else {
-            $this->data['sub_competencies'] = $this->competency_m->getSubCompArray($id);
+            $this->data['sub_competencies'] = $this->Competency_m->getSubCompArray($id);
         }
         if (count($this->data['sub_competencies'])) {
             echo '<div class="form-group">
@@ -132,7 +131,7 @@ class jobtitle extends Admin_Controller {
             echo '</ul></div>';
         }
 //        echo json_encode($this->data['sub_competencies']);
-//        $competencies = $this->competency_m->get_with_parent($id);
+//        $competencies = $this->Competency_m->get_with_parent($id);
 //        echo json_encode($competencies);
     }
 

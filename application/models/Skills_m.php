@@ -1,6 +1,6 @@
 <?php
 
-Class skills_m extends My_Model {
+Class Skills_m extends My_Model {
 
     protected $_table_name = 'skills';
     protected $_order_by = '';

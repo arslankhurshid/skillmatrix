@@ -1,6 +1,6 @@
 <?php
 
-Class competency_m extends My_Model {
+Class Competency_m extends My_Model {
 
     public function __construct() {
         parent::__construct();

@@ -42,11 +42,12 @@
             <div>
                 <section class="col-md-4">
                     <?php
-                    $user_name = $this->session->user_name;
+//                            print_r($this->session);
+                    $user_name = $this->session->name;
                     echo "<a href='mailto:" . $user_name . "'>" . '<span class="glyphicon glyphicon-user"></span>' . '&nbsp;' . $user_name;
 //                    echo mailto('".$email."', '<span class="glyphicon glyphicon-user"></span> $email'); 
                     ?> <br>
-                    <?php echo anchor('admin/login/logout', '<span class="glyphicon glyphicon-off"></span> logout'); ?> <br>
+                    <?php echo anchor('admin/login/logout', '<span class="glyphicon glyphicon-off"></span> Abmelden'); ?> <br>
                 </section>
             </div>
         </div>
