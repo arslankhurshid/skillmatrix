@@ -10,7 +10,6 @@ Class Dashboard extends Admin_Controller {
         $this->load->model('User_has_comp_m');
         $this->load->model('Job_title_m');
         $this->load->model('Skills_m');
-        
     }
 
     function index() {
@@ -44,7 +43,7 @@ Class Dashboard extends Admin_Controller {
             $this->data['user'] = $this->User_m->get($id);
 
 
-            if (empty(count($this->data['user'])))
+            if (empty($this->data['user']))
                 $this->data['errors'][] = "User could not be found";
         }
         else {
@@ -89,6 +88,9 @@ Class Dashboard extends Admin_Controller {
                 }
             }
             redirect(site_url('admin/dashboard'));
+        }
+        else {
+            $this->data['validation_error'] = validation_errors();
         }
         $this->data['subview'] = 'admin/user/edit';
         $this->data['job_title'] = $this->Job_title_m->get_job_titles();

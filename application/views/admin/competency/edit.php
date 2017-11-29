@@ -1,5 +1,5 @@
 <h3><?php echo empty($competency->id) ? 'Neue Kompetenz' : 'Bearbeiten:' . '&nbsp' . $competency->name ?></h3>
-<?php if (!empty(validation_errors())): ?>
+<?php if (isset($validation_error) && $validation_error !==''): ?>
     <div class="alert alert-danger" id="errordiv">
         <?php echo validation_errors() ?>
     </div>

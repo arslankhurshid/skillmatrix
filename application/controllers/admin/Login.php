@@ -29,6 +29,9 @@ Class Login extends Admin_Controller {
                 redirect(site_url('admin/login/login'));
             }
         }
+        else{
+            $this->data['validation_error'] = validation_errors();
+        }
         //load view
         $this->data['subview'] = 'admin/login/login';
         $this->load->view('admin/_layout_modal', $this->data);

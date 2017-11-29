@@ -18,7 +18,7 @@
 
 </style>
 <div class="panel-body">
-    <?php if (!empty(validation_errors())): ?>
+    <?php if (isset($validation_error) && $validation_error !==''): ?>
         <div class="alert alert-danger" id="errordiv">
             <?php
             echo validation_errors();

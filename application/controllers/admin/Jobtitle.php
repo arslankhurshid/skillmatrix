@@ -24,7 +24,7 @@ Class Jobtitle extends Admin_Controller {
             $this->data['job_title'] = $this->Job_title_m->get($id);
 
 
-            if (empty(count($this->data['job_title'])))
+            if (empty($this->data['job_title']))
                 $this->data['errors'][] = "Title could not be found";
         }
         else {
@@ -64,6 +64,9 @@ Class Jobtitle extends Admin_Controller {
                 }
             }
             redirect(site_url('admin/jobtitle'));
+        }
+        else {
+            $this->data['validation_error'] = validation_errors();
         }
         $this->data['subview'] = 'admin/job_title/edit';
         $this->load->view('admin/_layout_main', $this->data);

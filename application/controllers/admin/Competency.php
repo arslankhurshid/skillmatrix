@@ -38,7 +38,7 @@ Class Competency extends Admin_Controller {
     public function edit($id = NULL) {
         if ($id) {
             $this->data['competency'] = $this->Competency_m->get($id);
-            if (empty(count($this->data['competency'])))
+            if (empty($this->data['competency']))
                 $this->data['errors'][] = "Competency could not be found";
         }
         else {
@@ -52,6 +52,8 @@ Class Competency extends Admin_Controller {
             $data = $this->Competency_m->array_from_post(array('name', 'parent_id'));
             $this->Competency_m->save($data, $id);
             redirect(site_url('admin/competency'));
+        } else {
+            $this->data['validation_error'] = validation_errors();
         }
         $this->data['subview'] = 'admin/competency/edit';
         $this->load->view('admin/_layout_main', $this->data);
